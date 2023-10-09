@@ -1,19 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Cairo:wght@300;400;500;600;700;900&family=Castoro+Titling&family=IBM+Plex+Sans+Arabic:wght@200;300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&family=Ubuntu:wght@300;400;500;700&display=swap");
 
-@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Cairo:wght@300;400;500;600;700;900&family=Castoro+Titling&family=IBM+Plex+Sans+Arabic:wght@200;300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&family=Ubuntu:wght@300;400;500;700&display=swap');
-*{
-    margin:0;
-    padding:0;
-    box-sizing: border-box;
+:root {
+  --black-color: #000;
+  --white-color: #fff;
+  --primary-color: #fc4c02;
+  --light-blue-color: #00b5e2;
+  --second-blue-color: #00cfb4;
+  --dark-blue-color: #0857c3;
+  --red-color: #e4002b;
+  --yellow-color: #ffcd00;
 }
 
-body{
-    font-family: 'Open Sans', sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: "Open Sans", sans-serif;
+  background-color: #e2e2e2;
+  min-height: 100vh !important;
+}
 .text-editor {
   width: 1086px;
   margin: 0 auto;
 }
 .ql-editor {
   min-height: 100px;
+}
+
+.main-heading{
+  color:var(--red-color);
+position: relative;
+width:fit-content;
+
+}
+.main-heading::before{
+position: absolute;
+content:"";
+width:80%;
+height: 3px;
+background-color: var(--primary-color);
+bottom: -7px;
+transform: translateX(10%);
+
 }

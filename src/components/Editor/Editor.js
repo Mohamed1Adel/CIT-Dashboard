@@ -2,26 +2,27 @@ import React from "react";
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "./EditorToolbar";
 import "react-quill/dist/quill.snow.css";
-import axios from "axios";
-export const Editor = ({ getAllData }) => {
+export const Editor = ({setOne}) => {
   const [state, setState] = React.useState({ value: null });
-  const [dis, setDis] = React.useState(false);
   const handleChange = (value) => {
     setState({ value });
-    setDis(value == "" ? true : false)
+    setOne({value})
+    // setTwo({value})
+    // setThree({value})
+    // setDis(value == "" ? true : false)
   };
 
-  const addElemenet = (value) => {
-    axios
-      .post("http://localhost:8000/programs", { title: value })
-      .then((res) => {
-        console.log("res");
-        getAllData();
-      })
-      .catch((err) => {
-        console.log("err");
-      });
-  };
+  // const addElemenet = (value) => {
+  //   axios
+  //     .post("http://localhost:8000/programs", { title: value })
+  //     .then((res) => {
+  //       console.log("res");
+  //       getAllData();
+  //     })
+  //     .catch((err) => {
+  //       console.log("err");
+  //     });
+  // };
   return (
     <>
       <div className="text-editor">
@@ -35,8 +36,8 @@ export const Editor = ({ getAllData }) => {
           formats={formats}
           
         />
-        {/* <div dangerouslySetInnerHTML={{ __html: state.value }} /> */}
-        <button  disabled={dis} onClick={() => addElemenet(state.value)}> اعععع</button>
+        <div dangerouslySetInnerHTML={{ __html: state.value }} />
+        {/* <button  disabled={dis} onClick={() => addElemenet(state.value)}> send</button> */}
       </div>
     </>
   );

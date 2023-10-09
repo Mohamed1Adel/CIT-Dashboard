@@ -1,31 +1,24 @@
-import React, { useState, useEffect } from "react";
-import "react-quill/dist/quill.snow.css";
-import Editor from "./components/Editor/Editor";
-import axios, { Axios } from "axios";
-
+import React from "react";
+import SideMenu from "./components/sideMenu/sideMenu";
+import Home from "./components/Home/Home";
+import "./App.scss"
+import { Row, Col } from "react-bootstrap";
 function App() {
-
   return (
     <div className="App">
-      
+        <Row className="p-0 m-0">
+        <Col lg="2" className="p-0 m-0">
+          <SideMenu />
+        </Col>
+        <Col lg="10" className="p-0 m-0">
+          <Home />
+        </Col>
+        </Row>
     </div>
   );
 }
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useState, useEffect } from "react";
 // import ReactQuill from "react-quill";
@@ -132,8 +125,3 @@ export default App;
 // }
 
 // export default App;
-
-
-
-
-

@@ -1,0 +1,32 @@
+@import "../../index.scss";
+
+.form-section{
+padding-top:30px;
+}
+
+.form-section form{
+    width:80%;
+    margin:auto
+}
+.full-form{
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+}
+.right-form,.left-form{
+    width:48%;
+}
+
+.checks{
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+.form-check{
+padding:5px;
+cursor: pointer;
+}
+
+.editor-area{
+    width:100%
+}

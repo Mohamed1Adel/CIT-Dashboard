@@ -1,0 +1,13 @@
+@import "../../index.scss";
+.head-logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+    color:#fff;
+    letter-spacing: -1px;
+    height: 80px;
+}
+.home-section{
+    padding:10px
+}
