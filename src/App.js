@@ -3,9 +3,11 @@ import SideMenu from "./components/sideMenu/sideMenu";
 import Home from "./components/Home/Home";
 import "./App.scss"
 import { Row, Col } from "react-bootstrap";
+import UploadMultiImages from "./components/uploadMultiImages";
 function App() {
   return (
     <div className="App">
+      {/* <UploadMultiImages /> */}
         <Row className="p-0 m-0">
         <Col lg="2" className="p-0 m-0">
           <SideMenu />
