@@ -1,19 +1,28 @@
 @import "../../index.scss";
 
 .form-section{
+display: flex;
+align-items: flex-start;
+justify-content: space-evenly;
+flex-wrap: wrap;
 padding-top:30px;
 }
 
 .form-section form{
-    width:80%;
-    margin:auto
+    // margin:auto
 }
-.full-form{
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-}
-.right-form,.left-form{
+// .full-form{
+//     display: flex;
+//     align-items: start;
+//     justify-content: space-between;
+//     flex-wrap: wrap;
+//         min-width: 500px;
+// }
+// .pack-form{
+//     width: 450px;
+// }
+.main-domestic .main-form,.main-domestic .pack-form{
+    min-width: 450px;
     width:48%;
 }
 
