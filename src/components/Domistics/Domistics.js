@@ -6,8 +6,8 @@ import "react-quill/dist/quill.snow.css";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 
-  import { ToastContainer, toast } from "react-toastify";
-  import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function Domistics() {
   const sendForm = useRef();
   const [postImage, setPostImage] = useState([]);
@@ -47,10 +47,13 @@ function Domistics() {
   const handleSubmit = async (e) => {
     // e.preventDefault();
     await axios
-      .post("http://localhost:9000/domestics", domestic)
+      .post("http://localhost:9000/domestics", {
+        id: Math.floor(Math.random() * 1000000000000000),
+        ...domestic,
+      })
       .then((res) => {
         console.log(res);
-        domesticNotify()
+        domesticNotify();
       })
       .catch((err) => {
         console.log(err);
@@ -59,15 +62,14 @@ function Domistics() {
   const addNewPack = async (e) => {
     e.preventDefault();
     console.log(pack);
-    packs.push({id:Math.floor(Math.random()  * 1000000000000000),...pack});
+    packs.push({ id: Math.floor(Math.random() * 1000000000000000), ...pack });
     console.log(packs);
     setDomestic({ ...domestic, packages: packs });
-    sendForm.current.value = ''
+    sendForm.current.value = "";
     packageNotify();
   };
 
-  useEffect(() => {
-  },[]);
+  useEffect(() => {}, []);
   const handleTermsChange = (value) => {
     setDomestic({ ...domestic, termsAndConditions: value });
   };
@@ -106,6 +108,7 @@ function Domistics() {
       const base64 = await convertToBase64(file[i]);
       allImages.push({ img_url: base64 });
       // setPostImage([{ ...postImage, myFile: base64 }]);
+      console.log(allImages);
       setDomestic({ ...domestic, images: allImages });
       console.log(domestic);
     }
@@ -113,7 +116,6 @@ function Domistics() {
 
   const packageNotify = () => toast("Package Added Successfully");
   const domesticNotify = () => toast("Demestic Added Successfully");
-
 
   return (
     <div>
