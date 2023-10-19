@@ -73,11 +73,11 @@ function HistorecalTampUpdate() {
   //   };
   const getItemById = async () => {
     const response = await axios.get(`${API_URL}/programs/${id}`);
-    const domData = response.data;
+    const domData =  response.data;
     // console.log(domData);
     setData(domData);
-    setHotels(domData.hotels);
-    // console.log(data);
+    setHotels(domData?.hotels);
+    console.log(data);
   };
 
   const handleSubmit = async (e) => {
