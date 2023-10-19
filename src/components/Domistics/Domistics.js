@@ -45,7 +45,7 @@ function Domistics() {
     nileCruise: false,
   });
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     await axios
       .post("http://localhost:9000/domestics", domestic)
       .then((res) => {
