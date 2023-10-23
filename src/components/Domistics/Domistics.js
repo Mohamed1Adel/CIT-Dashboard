@@ -8,6 +8,7 @@ import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_URL, MONGODB_URL } from "../../envData";
 function Domistics() {
   const sendForm = useRef();
   const [postImage, setPostImage] = useState([]);
@@ -45,19 +46,37 @@ function Domistics() {
     nileCruise: false,
   });
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await axios
-      .post("http://localhost:9000/domestics", {
-        id: Math.floor(Math.random() * 1000000000000000),
-        ...domestic,
+    // e.preventDefault();
+    try {
+      // await axios
+      //   .post(`${API_URL}/domestics`, {
+      //     id: Math.floor(Math.random() * 1000000000000000),
+      //     ...domestic,
+      //   })
+      //   .then((res) => {
+      //     console.log(res);
+      //     domesticNotify();
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+      await axios({
+        method: "post",
+        url: `${MONGODB_URL}/addDomestic`,
+        data: { ...domestic },
       })
-      .then((res) => {
-        console.log(res);
-        domesticNotify();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((res) => {
+          console.log(res);
+          domesticNotify();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (e) {
+      console.log("====================================");
+      console.log(e);
+      console.log("====================================");
+    }
   };
   const addNewPack = async (e) => {
     e.preventDefault();

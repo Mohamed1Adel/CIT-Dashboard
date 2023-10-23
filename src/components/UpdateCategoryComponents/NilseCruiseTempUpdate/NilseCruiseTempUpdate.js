@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { API_URL } from "../../../envData";
+import { API_URL, MONGODB_URL } from "../../../envData";
 import { Form, Button } from "react-bootstrap";
 import QuillToolbar, { formats, modules } from "../../Editor/EditorToolbar";
 import ReactQuill from "react-quill";
@@ -11,7 +11,7 @@ function NileCruiseTempUpdate() {
   const { id } = useParams();
   // console.log(id);
   const [data, setData] = useState();
-    const [newDay, setNewDay] = useState();
+  const [newDay, setNewDay] = useState();
   const [packs, setPacks] = useState([]);
   const [newPack, setNewPack] = useState({
     packTitle: "4 Days / 3 Nights",
@@ -21,13 +21,21 @@ function NileCruiseTempUpdate() {
     double: "",
     triple: "",
   });
-    const dayUpdatedNotify = () => toast("Day Updated Successfully");
+  const dayUpdatedNotify = () => toast("Day Updated Successfully");
   const getItemById = async () => {
-    const response = await axios.get(`${API_URL}/nileCruise/${id}`);
-    const domData = response.data;
-    // console.log(domData);
-    setData(domData);
-    setPacks(domData.packages);
+    try {
+      // const response = await axios.get(`${API_URL}/nileCruise/${id}`);
+      const response = await axios.get(`${MONGODB_URL}/getNileCruiseDetails/${id}`);
+      const domData = response.data;
+      // console.log(domData);
+      setData(domData);
+      setPacks(domData.packages);
+    } catch (e) {
+      console.log("====================================");
+      console.log(e);
+      console.log("====================================");
+    }
+
     // console.log(data);
   };
   const updatePack = async (e, packItem) => {
@@ -75,27 +83,34 @@ function NileCruiseTempUpdate() {
     // packageNotify();
     handleSubmit();
   };
-    const updatedDaysF = (id) => {
-      let updatedDaysArr = data?.itenary?.map((day) =>
-        day.id === id ? { id: day.id, ...newDay } : day
-      );
-      setData({ ...data, itenary: updatedDaysArr });
-      // console.log(updatedDaysArr);
-      console.log(data);
-      dayUpdatedNotify();
-    };
+  const updatedDaysF = (id) => {
+    let updatedDaysArr = data?.itenary?.map((day) =>
+      day.id === id ? { id: day.id, ...newDay } : day
+    );
+    setData({ ...data, itenary: updatedDaysArr });
+    // console.log(updatedDaysArr);
+    console.log(data);
+    dayUpdatedNotify();
+  };
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await axios
-      .patch(`${API_URL}/nileCruise/${id}`, data)
-      .then((res) => {
-        console.log(res);
-        // domesticNotify();
-        getItemById();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // e.preventDefault();
+    try {
+      await axios
+        // .patch(`${API_URL}/nileCruise/${id}`, data)
+        .patch(`${MONGODB_URL}/updateNileCruiseDetails/${id}`, data)
+        .then((res) => {
+          console.log(res);
+          // domesticNotify();
+          getItemById();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (e) {
+      console.log("====================================");
+      console.log(e);
+      console.log("====================================");
+    }
   };
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -129,12 +144,12 @@ function NileCruiseTempUpdate() {
   const handlecancellationChange = (value) => {
     setData({ ...data, cancellation: value });
   };
-//   const handleChildrenChange = (value) => {
-//     setData({ ...data, childrenPolices: value });
-//   };
-//   const handleRequiredDocsChange = (value) => {
-//     setData({ ...data, requiredDocs: value });
-//   };
+  //   const handleChildrenChange = (value) => {
+  //     setData({ ...data, childrenPolices: value });
+  //   };
+  //   const handleRequiredDocsChange = (value) => {
+  //     setData({ ...data, requiredDocs: value });
+  //   };
 
   useEffect(() => {
     getItemById();
@@ -487,7 +502,7 @@ function NileCruiseTempUpdate() {
                       {" "}
                       <Form.Group controlId="formFileMultiple" className="mb-3">
                         <select
-                        //   value={pack.packTitle}
+                          //   value={pack.packTitle}
                           onChange={(e) => {
                             setNewPack({
                               ...newPack,
@@ -521,7 +536,7 @@ function NileCruiseTempUpdate() {
                     <td>
                       <Form.Group className="mb-3" controlId="formBasic">
                         <Form.Control
-                        //   value={pack.startDate}
+                          //   value={pack.startDate}
                           onChange={(e) => {
                             setNewPack({
                               ...newPack,
@@ -536,7 +551,7 @@ function NileCruiseTempUpdate() {
                     <td>
                       <Form.Group className="mb-3" controlId="formBasic">
                         <Form.Control
-                        //   value={pack.endDate}
+                          //   value={pack.endDate}
                           onChange={(e) => {
                             setNewPack({
                               ...newPack,

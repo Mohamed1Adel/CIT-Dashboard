@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { API_URL } from "../../../envData";
+import { API_URL, MONGODB_URL } from "../../../envData";
 import { Form, Button } from "react-bootstrap";
 import QuillToolbar, { formats, modules } from "../../Editor/EditorToolbar";
 import ReactQuill from "react-quill";
@@ -31,11 +31,20 @@ function OutboundTampUpdate() {
     // const packIndex =  packs.findIndex((pack)=>{
     //     return pack.id === packId
     // })
-    const newHotels = hotels.map((hotel) =>{
-    console.log(hotelOne);
-    console.log(hotelTwo);
-     return hotel == HotelItem ? { id: hotel.id, ...newHotel , hotel:[ {id:Math.floor(Math.random() * 1000000000000000), ...hotelOne},{id:Math.floor(Math.random() * 1000000000000000), ...hotelTwo}] } : hotel
-  });
+    const newHotels = hotels.map((hotel) => {
+      console.log(hotelOne);
+      console.log(hotelTwo);
+      return hotel == HotelItem
+        ? {
+            id: hotel.id,
+            ...newHotel,
+            hotel: [
+              { id: Math.floor(Math.random() * 1000000000000000), ...hotelOne },
+              { id: Math.floor(Math.random() * 1000000000000000), ...hotelTwo },
+            ],
+          }
+        : hotel;
+    });
     console.log(newHotels);
     setData({ ...data, PackhotelsAndPrices: newHotels });
   };
@@ -71,28 +80,42 @@ function OutboundTampUpdate() {
   //     handleSubmit();
   //   };
   const getItemById = async () => {
-    const response = await axios.get(`${API_URL}/outbound/${id}`);
-    const domData = response.data;
-    console.log(domData);
-    setData(domData);
-    setHotels(domData.PackhotelsAndPrices);
+    try {
+      // const response = await axios.get(`${API_URL}/outbound/${id}`);
+      const response = await axios.get(`${MONGODB_URL}/getOutboundDetails/${id}`);
+      const domData = response.data;
+      console.log(domData);
+      setData(domData);
+      setHotels(domData.PackhotelsAndPrices);
+    } catch (e) {
+      console.log("====================================");
+      console.log(e);
+      console.log("====================================");
+    }
+
     // console.log(data);
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await axios
-      .patch(`${API_URL}/outbound/${id}`, data)
-      .then((res) => {
-        console.log(res);
-        // domesticNotify();
-        getItemById();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    console.log(data);
-    programUpdatedNotify();
+    // e.preventDefault();
+    try {
+      await axios
+        .patch(`${MONGODB_URL}/updateOutboundDetails/${id}`, data)
+        .then((res) => {
+          console.log(res);
+          // domesticNotify();
+          getItemById();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      console.log(data);
+      programUpdatedNotify();
+    } catch (e) {
+      console.log("====================================");
+      console.log(e);
+      console.log("====================================");
+    }
   };
 
   const updatedDays = () => {
@@ -113,7 +136,7 @@ function OutboundTampUpdate() {
       };
     });
   };
-  
+
   const handleFileUpload = async (e) => {
     const file = e.target.files;
     const allImages = [];
@@ -393,7 +416,7 @@ function OutboundTampUpdate() {
                       <th>
                         <Form.Group className="mb-3" controlId="formBasic">
                           <Form.Control
-                              // value={hotel?.hotel[1]?.hotelName}
+                            // value={hotel?.hotel[1]?.hotelName}
                             onChange={(e) => {
                               //   setNewHotel({
                               //     ...newHotel,

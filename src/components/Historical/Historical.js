@@ -8,6 +8,7 @@ import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_URL, MONGODB_URL } from "../../envData";
 function Historical() {
   const sendForm = useRef();
   const [day, setDay] = useState([]);
@@ -59,17 +60,22 @@ function Historical() {
       : "no days founded";
   // console.log(showDays);
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await axios
-      .post("http://localhost:9000/programs", program)
-      .then((res) => {
-        console.log(res);
-        domesticNotify();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    console.log(program);
+    // e.preventDefault();
+    try {
+      await axios
+        .post(`${MONGODB_URL}/addProgram`, program)
+        .then((res) => {
+          console.log(res);
+          domesticNotify();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (e) {
+      console.log("====================================");
+      console.log(e);
+      console.log("====================================");
+    }
 
     console.log(program);
   };
@@ -139,7 +145,7 @@ function Historical() {
 
   return (
     <div>
-      <h1 className="main-heading">Domestics</h1>
+      <h1 className="main-heading">Historical</h1>
       <div className="form-section main-domestic">
         <Form className="main-form" onSubmit={(e) => handleSubmit(e)}>
           <div className="full-form">

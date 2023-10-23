@@ -13,6 +13,7 @@ import HistorecalTampUpdate from "../UpdateCategoryComponents/HistorecalTampUpda
 import OutboundTempUpdate from "../UpdateCategoryComponents/outboundTempUpdate/outboundTampUpdate";
 import NileCruiseTempUpdate from "../UpdateCategoryComponents/NilseCruiseTempUpdate/NilseCruiseTempUpdate";
 import DayTourTampUpdate from "../UpdateCategoryComponents/DayTourTampUpdate/DayTourTampUpdate";
+import HajjOmrahTampUpdate from "../UpdateCategoryComponents/HajjOmrahTempUpdate/HajjOmrahTempUpdate";
 function Home() {
   return (
     <div className="">
@@ -39,6 +40,7 @@ function Home() {
           <Route path="/dayTour" element={<DayTours />} />
           <Route path="/dayTourTempUpdate/:id" element={<DayTourTampUpdate />} />
           <Route path="/Hajj" element={<HajjAndOmrah />} />
+          <Route path="/HajjTempUpdate/:id" element={<HajjOmrahTampUpdate />} />
         </Routes>
       </div>
     </div>

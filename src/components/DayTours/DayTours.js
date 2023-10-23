@@ -8,7 +8,14 @@ import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_URL, MONGODB_URL } from "../../envData";
 function DayTours() {
+  const [packs, setPacks] = useState([]);
+  const [pack, setPack] = useState({
+    persons: "1 - 2",
+    carType: "lemousine",
+    cost: "",
+  });
   const [day, setDay] = useState([]);
   const [days, setDays] = useState([]);
   const [dayTour, setDayTour] = useState({
@@ -22,15 +29,23 @@ function DayTours() {
     box9: "",
     box10: "",
     images: [],
-    itenary:[],
+    itenary: [],
     termsAndConditions: "",
     cancellation: "",
     dayTour: false,
+    rates: [
+      {
+        id: "",
+        persons: "",
+        carType: "",
+        cost: "",
+      },
+    ],
   });
 
-    const handleItenaryContentChange = (value) => {
-      setDay({ ...day, dayContent: value });
-    };
+  const handleItenaryContentChange = (value) => {
+    setDay({ ...day, dayContent: value });
+  };
   const addNewDay = (e) => {
     e.preventDefault();
     days.push({ id: Math.floor(Math.random() * 10000000), ...day });
@@ -51,22 +66,35 @@ function DayTours() {
       : "no days founded";
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await axios
-      .post("http://localhost:9000/dayTour", {
-        id: Math.floor(Math.random() * 1000000000000000),
-        ...dayTour,
-      })
-      .then((res) => {
-        console.log(res);
-        domesticNotify();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // e.preventDefault();
+    try {
+      await axios
+        .post(`${MONGODB_URL}/addDayTour`, dayTour)
+        .then((res) => {
+          console.log(res);
+          domesticNotify();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (e) {
+      console.log("====================================");
+      console.log(e);
+      console.log("====================================");
+    }
+
     console.log("====================================");
     console.log(dayTour);
     console.log("====================================");
+  };
+  const addNewPack = async (e) => {
+    e.preventDefault();
+    console.log(pack);
+    packs.push({ id: Math.floor(Math.random() * 1000000000000000), ...pack });
+    console.log(packs);
+    setDayTour({ ...dayTour, rates: packs });
+    // sendForm.current.value = "";
+    packageNotify();
   };
   useEffect(() => {}, []);
   const handleTermsChange = (value) => {
@@ -252,6 +280,71 @@ function DayTours() {
 
           <Button variant="primary" type="submit">
             Add New
+          </Button>
+        </Form>
+        <Form className="pack-form" onSubmit={(e) => addNewPack(e)}>
+          <Form.Group controlId="formFileMultiple" className="mb-3">
+            <h6>Select persons count</h6>
+            <select
+              // value={domestic.packages.packTitle}
+              // onChange={(e) =>
+              //   setDomestic({
+              //     ...domestic,
+              //     packages: [{
+              //       packTitle: e.target.value,
+              //     }],
+              //   })
+              // }
+              value={pack.persons}
+              onChange={(e) => {
+                setPack({ ...pack, persons: e.target.value });
+              }}
+              class="form-select"
+              aria-label="Select persons"
+            >
+              <option selected value="1 - 2">
+                1 - 2
+              </option>
+              <option value="3 - 6">3 - 6</option>
+              <option value="7 - 10">7 - 10</option>
+              <option value="11 - 15">11 - 15</option>
+            </select>
+          </Form.Group>
+          <Form.Group controlId="formFileMultiple" className="mb-3">
+            <h6>Select car Type</h6>
+            <select
+              value={pack.carType}
+              onChange={(e) => {
+                setPack({ ...pack, carType: e.target.value });
+              }}
+              class="form-select"
+              aria-label="Select car"
+            >
+              <option selected value="limousine">
+                limousine
+              </option>
+              <option value="HS">HS</option>
+              <option value="Coster">Coster</option>
+              <option value="Bus">Bus</option>
+            </select>
+          </Form.Group>
+          <h6>Cost</h6>
+          <Form.Group className="mb-3" controlId="formBasic">
+            <Form.Control
+              value={pack.costPerPerson}
+              onChange={(e) => {
+                setPack({ ...pack, costPerPerson: e.target.value });
+              }}
+              type="text"
+              placeholder="cost"
+            />
+          </Form.Group>
+          <Button className="btn-warning" variant="primary" type="submit">
+            Add New Pack
+          </Button>
+          <ToastContainer />
+          <Button className="btn-warning" variant="primary" type="reset">
+            Reset
           </Button>
         </Form>
       </div>

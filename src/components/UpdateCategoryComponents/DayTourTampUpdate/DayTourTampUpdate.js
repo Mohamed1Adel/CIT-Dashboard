@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { API_URL } from "../../../envData";
+import { API_URL, MONGODB_URL } from "../../../envData";
 import { Form, Button } from "react-bootstrap";
 import QuillToolbar, { formats, modules } from "../../Editor/EditorToolbar";
 import ReactQuill from "react-quill";
@@ -12,80 +12,75 @@ function DayTourTempUpdate() {
   const [data, setData] = useState();
   const [packs, setPacks] = useState([]);
   const [newPack, setNewPack] = useState({
-    packTitle: "4 Days / 3 Nights",
-    duration: "summer",
-    startDate: "",
-    endDate: "",
-    single: "",
-    double: "",
-    triple: "",
+    persons: "1 - 2",
+    carType: "limousine",
+    costPerPerson: "",
   });
-  const updatePack = async (e, packItem) => {
-    e.preventDefault();
-    // console.log(newPack);
-    // packs.push(newPack);
-    // console.log(packs);
-    // console.log(packs);
-    // console.log(newPack);
+  const getItemById = async () => {
+    try {
+      // const response = await axios.get(`${API_URL}/dayTour/${id}`);
+      const response = await axios.get(`${MONGODB_URL}/getDayTourDetails/${id}`);
+      const domData = response.data;
+      // console.log(domData);
+      setData(domData);
+      setPacks(domData?.rates);
+    } catch (e) {
+      console.log("====================================");
+      console.log(e);
+      console.log("====================================");
+    }
 
-    // const packIndex =  packs.findIndex((pack)=>{
-    //     return pack.id === packId
-    // })
-    const newPacks = packs.map((pack) => (pack == packItem ? newPack : pack));
-    console.log(newPacks);
-    setData({ ...data, packages: newPacks });
-    // console.log(index);
-    // delete packs[packIndex]
-    // console.log(packs);
-    //    const splicePacks =  packs.splice(packIndex,1);
-    //     const newPacks = packs.filter((pack)=> pack.id !== splicePacks.id);
-    //     // packs.push(newPack);
-    //     newPacks.push(newPack)
-    //     console.log(newPacks);
+    // console.log(data);
+  };
 
-    //   sendForm.current.value = "";
-    //   packageNotify();
-  };
-  const deletePack = (e, packId) => {
-    e.preventDefault();
-    const filterPacks = data?.packages?.filter((pack) => pack.id !== packId);
-    console.log(filterPacks);
-    setData({ ...data, packages: filterPacks });
-  };
   const addNewPack = (e) => {
     e.preventDefault();
     // console.log({ ...data, packages: packs });
     let rand = Math.floor(Math.random() * 1000000000000000);
     console.log(rand);
+    console.log(newPack);
+    console.log(packs);
     packs.push({ id: rand, ...newPack });
     console.log({ id: rand, ...newPack });
     // console.log(packs);
-    setData({ ...data, packages: packs });
+    setData({ ...data, rates: packs });
     // sendForm.current.value = "";
     // packageNotify();
     handleSubmit();
   };
-  const getItemById = async () => {
-    const response = await axios.get(`${API_URL}/dayTour/${id}`);
-    const domData = response.data;
-    // console.log(domData);
-    setData(domData);
-    setPacks(domData.packages);
-    // console.log(data);
+
+  const updatePack = async (e, packItem) => {
+    e.preventDefault();
+    const newPacks = packs.map((pack) => (pack == packItem ? newPack : pack));
+    console.log(newPacks);
+    setData({ ...data, rates: newPacks });
+  };
+  const deletePack = (e, packId) => {
+    e.preventDefault();
+    const filterPacks = data?.rates?.filter((pack) => pack.id !== packId);
+    console.log(filterPacks);
+    setData({ ...data, rates: filterPacks });
   };
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
-    await axios
-      .patch(`${API_URL}/domestics/${id}`, data)
-      .then((res) => {
-        console.log(res);
-        // domesticNotify();
-        getItemById();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      await axios
+        // .patch(`${API_URL}/dayTour/${id}`, data)
+        .patch(`${MONGODB_URL}/updateDayTourDetails/${id}`, data)
+        .then((res) => {
+          console.log(res);
+          // domesticNotify();
+          getItemById();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (e) {
+      console.log("====================================");
+      console.log(e);
+      console.log("====================================");
+    }
   };
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -254,72 +249,16 @@ function DayTourTempUpdate() {
               <div className="checks">
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                   <Form.Check
-                    checked={data?.hotOffer}
-                    value={data?.hotOffer}
+                    checked={data?.dayTour}
+                    value={data?.dayTour}
                     onChange={(e) => {
                       setData({
                         ...data,
-                        hotOffer: e.currentTarget.checked,
+                        dayTour: e.currentTarget.checked,
                       });
                     }}
                     type="checkbox"
-                    label="Hot Deal"
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                  <Form.Check
-                    checked={data?.honeyMoon}
-                    value={data?.honeyMoon}
-                    onChange={(e) => {
-                      setData({
-                        ...data,
-                        honeyMoon: e.currentTarget.checked,
-                      });
-                    }}
-                    type="checkbox"
-                    label="Hoeny Moon"
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                  <Form.Check
-                    checked={data?.summer}
-                    value={data?.summer}
-                    onChange={(e) => {
-                      setData({
-                        ...data,
-                        summer: e.currentTarget.checked,
-                      });
-                    }}
-                    type="checkbox"
-                    label="Summer"
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                  <Form.Check
-                    checked={data?.winter}
-                    value={data?.winter}
-                    onChange={(e) => {
-                      setData({
-                        ...data,
-                        winter: e.currentTarget.checked,
-                      });
-                    }}
-                    type="checkbox"
-                    label="Winter"
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                  <Form.Check
-                    checked={data?.nileCruise}
-                    value={data?.nileCruise}
-                    onChange={(e) => {
-                      setData({
-                        ...data,
-                        nileCruise: e.currentTarget.checked,
-                      });
-                    }}
-                    type="checkbox"
-                    label="Nile Cruise"
+                    label="Day Tour"
                   />
                 </Form.Group>
               </div>
@@ -369,243 +308,65 @@ function DayTourTempUpdate() {
             </div>
           </div>
         </Form>
-        {/* <Form className="pack-form" onSubmit={(e) => addNewPack(e)}>
-          <Form.Group controlId="formFileMultiple" className="mb-3">
-            <h6>Select package</h6>
-            <select
-              // value={domestic.packages.packTitle}
-              // onChange={(e) =>
-              //   setDomestic({
-              //     ...domestic,
-              //     packages: [{
-              //       packTitle: e.target.value,
-              //     }],
-              //   })
-              // }
-              value={pack.packTitle}
-              onChange={(e) => {
-                setPack({ ...pack, packTitle: e.target.value });
-              }}
-              class="form-select"
-              aria-label="Select Package"
-            >
-              <option selected value="4 Days / 3 Nights">
-                4 Days / 3 Nights
-              </option>
-              <option value="5 Days / 4 Nights">5 Days / 4 Nights</option>
-              <option value="6 Days / 5 Nights">6 Days / 5 Nights</option>
-            </select>
-          </Form.Group>
-          <Form.Group controlId="formFileMultiple" className="mb-3">
-            <h6>Select Season</h6>
-            <select
-              // value={domestic.packages.duration}
-              // onChange={(e) =>
-              //   setDomestic({
-              //     ...domestic,
-              //     packages: [{
-              //       duration: e.target.value,
-              //     }],
-              //   })
-              // }
-              value={pack.duration}
-              onChange={(e) => {
-                setPack({ ...pack, duration: e.target.value });
-              }}
-              class="form-select"
-              aria-label="Select Package"
-            >
-              <option selected value="summer">
-                Summer
-              </option>
-              <option value="winter">Winter</option>
-            </select>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasic">
-            <Form.Label>Start Date</Form.Label>
-            <Form.Control
-              value={pack.startDate}
-              onChange={(e) => {
-                // setDomestic({ ...domestic, startDate: e.target.value });
-                setPack({ ...pack, startDate: e.target.value });
-              }}
-              type="date"
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasic">
-            <Form.Label>End date</Form.Label>
-            <Form.Control
-              value={pack.endDate}
-              onChange={(e) => {
-                // setDomestic({ ...domestic, endDate: e.target.value });
-                setPack({ ...pack, endDate: e.target.value });
-              }}
-              type="date"
-            />
-          </Form.Group>
-          <h6>Package Cost</h6>
-          <Form.Group className="mb-3" controlId="formBasic">
-            <Form.Control
-              ref={sendForm}
-              value={pack.single}
-              onChange={(e) => {
-                setPack({ ...pack, single: e.target.value });
-              }}
-              type="text"
-              placeholder="Single"
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasic">
-            <Form.Control
-              value={pack.double}
-              onChange={(e) => {
-                setPack({ ...pack, double: e.target.value });
-              }}
-              type="text"
-              placeholder="double"
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasic">
-            <Form.Control
-              value={pack.triple}
-              onChange={(e) => {
-                setPack({ ...pack, triple: e.target.value });
-              }}
-              type="text"
-              placeholder="triple"
-            />
-          </Form.Group>
-          <Button className="btn-warning" variant="primary" type="submit">
-            Add New Pack
-          </Button>
-          <ToastContainer />
-          <Button className="btn-warning" variant="primary" type="reset">
-            Reset
-          </Button>
-        </Form> */}
+
         <Form className="update-pack">
           <table class="table ">
             <thead>
               <tr>
-                <th scope="col">Package</th>
-                <th scope="col">Duration</th>
-                <th scope="col">Start data</th>
-                <th scope="col">End data</th>
-                <th scope="col">Single</th>
-                <th scope="col">Double</th>
-                <th scope="col">Triple</th>
+                <th scope="col">Persons</th>
+                <th scope="col">Car type</th>
+                <th scope="col">Cost</th>
                 <th scope="col">Update</th>
                 <th scope="col">Delete</th>
               </tr>
             </thead>
             <tbody>
-              {data?.packages?.map((pack) => {
+              {data?.rates?.map((rate) => {
                 return (
-                  <tr key={pack.id}>
+                  <tr key={rate.id}>
                     <th scope="row">
                       {" "}
                       <Form.Group controlId="formFileMultiple" className="mb-3">
                         <select
-                          value={pack.packTitle}
+                          value={rate.persons}
                           onChange={(e) => {
                             setNewPack({
                               ...newPack,
-                              packTitle: e.target.value,
+                              persons: e.target.value,
                             });
                           }}
                           class="form-select"
                           aria-label="Select Package"
                         >
-                          <option selected value="4 Days / 3 Nights">
-                            4 Days / 3 Nights
+                          <option selected value="1 - 2">
+                            1 - 2
                           </option>
-                          <option value="5 Days / 4 Nights">
-                            5 Days / 4 Nights
-                          </option>
-                          <option value="6 Days / 5 Nights">
-                            6 Days / 5 Nights
-                          </option>
+                          <option value="3 - 6">3 - 6</option>
+                          <option value="7 - 10">7 - 10</option>
+                          <option value="11 - 15">11 - 15</option>
                         </select>
                       </Form.Group>
                     </th>
                     <td>
                       <Form.Group controlId="formFileMultiple" className="mb-3">
                         <select
-                          value={pack.duration}
+                          value={rate.carType}
                           onChange={(e) => {
                             setNewPack({
                               ...newPack,
-                              duration: e.target.value,
+                              carType: e.target.value,
                             });
                           }}
                           class="form-select"
-                          aria-label="Select Package"
+                          aria-label="Select car"
                         >
-                          <option selected value="summer">
-                            Summer
+                          <option selected value="limousine">
+                            limousine
                           </option>
-                          <option value="winter">Winter</option>
+                          <option value="HS">HS</option>
+                          <option value="Coster">Coster</option>
+                          <option value="Bus">Bus</option>
                         </select>
-                      </Form.Group>
-                    </td>
-                    <td>
-                      <Form.Group className="mb-3" controlId="formBasic">
-                        <Form.Control
-                          //   value={pack.startDate}
-                          onChange={(e) => {
-                            setNewPack({
-                              ...newPack,
-                              startDate: e.target.value,
-                            });
-                          }}
-                          type="date"
-                          placeholder={pack.startDate}
-                        />
-                      </Form.Group>
-                    </td>
-                    <td>
-                      <Form.Group className="mb-3" controlId="formBasic">
-                        <Form.Control
-                          //   value={pack.endDate}
-                          onChange={(e) => {
-                            setNewPack({
-                              ...newPack,
-                              endDate: e.target.value,
-                            });
-                          }}
-                          type="date"
-                          placeholder={pack.endDate}
-                        />
-                      </Form.Group>
-                    </td>
-                    <td>
-                      <Form.Group className="mb-3" controlId="formBasic">
-                        <Form.Control
-                          //   value={pack.single}
-                          onChange={(e) => {
-                            setNewPack({
-                              ...newPack,
-                              single: e.target.value,
-                            });
-                          }}
-                          type="text"
-                          placeholder={pack.single}
-                        />
-                      </Form.Group>
-                    </td>
-                    <td>
-                      <Form.Group className="mb-3" controlId="formBasic">
-                        <Form.Control
-                          //   value={pack.double}
-                          onChange={(e) => {
-                            setNewPack({
-                              ...newPack,
-                              double: e.target.value,
-                            });
-                          }}
-                          type="text"
-                          placeholder={pack.double}
-                        />
                       </Form.Group>
                     </td>
                     <td>
@@ -615,11 +376,11 @@ function DayTourTempUpdate() {
                           onChange={(e) => {
                             setNewPack({
                               ...newPack,
-                              triple: e.target.value,
+                              costPerPerson: e.target.value,
                             });
                           }}
                           type="text"
-                          placeholder={pack.triple}
+                          placeholder={rate.costPerPerson}
                         />
                       </Form.Group>
                     </td>
@@ -627,7 +388,7 @@ function DayTourTempUpdate() {
                       <Button
                         className="btn btn-warning"
                         type="submit"
-                        onClick={(e) => updatePack(e, pack)}
+                        onClick={(e) => updatePack(e, rate)}
                       >
                         Update Pack
                       </Button>
@@ -635,7 +396,7 @@ function DayTourTempUpdate() {
                     <td>
                       <button
                         className="btn btn-danger"
-                        onClick={(e) => deletePack(e, pack.id)}
+                        onClick={(e) => deletePack(e, rate.id)}
                       >
                         Delete Pack
                       </button>
@@ -652,21 +413,18 @@ function DayTourTempUpdate() {
                       onChange={(e) => {
                         setNewPack({
                           ...newPack,
-                          packTitle: e.target.value,
+                          persons: e.target.value,
                         });
                       }}
                       class="form-select"
-                      aria-label="Select Package"
+                      aria-label="Select persons"
                     >
-                      <option selected value="4 Days / 3 Nights">
-                        4 Days / 3 Nights
+                      <option selected value="1 - 2">
+                        1 - 2
                       </option>
-                      <option value="5 Days / 4 Nights">
-                        5 Days / 4 Nights
-                      </option>
-                      <option value="6 Days / 5 Nights">
-                        6 Days / 5 Nights
-                      </option>
+                      <option value="3 - 6">3 - 6</option>
+                      <option value="7 - 10">7 - 10</option>
+                      <option value="11 - 15">11 - 15</option>
                     </select>
                   </Form.Group>
                 </th>
@@ -677,77 +435,19 @@ function DayTourTempUpdate() {
                       onChange={(e) => {
                         setNewPack({
                           ...newPack,
-                          duration: e.target.value,
+                          carType: e.target.value,
                         });
                       }}
                       class="form-select"
-                      aria-label="Select Package"
+                      aria-label="Select car"
                     >
-                      <option selected value="summer">
-                        Summer
+                      <option selected value="limousine">
+                        limousine
                       </option>
-                      <option value="winter">Winter</option>
+                      <option value="HS">HS</option>
+                      <option value="Coster">Coster</option>
+                      <option value="Bus">Bus</option>
                     </select>
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group className="mb-3" controlId="formBasic">
-                    <Form.Control
-                      //   value={newPack.startDate}
-                      onChange={(e) => {
-                        setNewPack({
-                          ...newPack,
-                          startDate: e.target.value,
-                        });
-                      }}
-                      type="date"
-                      placeholder=""
-                    />
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group className="mb-3" controlId="formBasic">
-                    <Form.Control
-                      //   value={newPack.endDate}
-                      onChange={(e) => {
-                        setNewPack({
-                          ...newPack,
-                          endDate: e.target.value,
-                        });
-                      }}
-                      type="date"
-                      placeholder=""
-                    />
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group className="mb-3" controlId="formBasic">
-                    <Form.Control
-                      //   value={newPack.single}
-                      onChange={(e) => {
-                        setNewPack({
-                          ...newPack,
-                          single: e.target.value,
-                        });
-                      }}
-                      type="text"
-                      placeholder=""
-                    />
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group className="mb-3" controlId="formBasic">
-                    <Form.Control
-                      //   value={newPack.double}
-                      onChange={(e) => {
-                        setNewPack({
-                          ...newPack,
-                          double: e.target.value,
-                        });
-                      }}
-                      type="text"
-                      placeholder=""
-                    />
                   </Form.Group>
                 </td>
                 <td>
@@ -757,7 +457,7 @@ function DayTourTempUpdate() {
                       onChange={(e) => {
                         setNewPack({
                           ...newPack,
-                          triple: e.target.value,
+                          costPerPerson: e.target.value,
                         });
                       }}
                       type="text"

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { API_URL } from "../../../envData";
+import { API_URL, MONGODB_URL } from "../../../envData";
 import { Form, Button } from "react-bootstrap";
 import QuillToolbar, { formats, modules } from "../../Editor/EditorToolbar";
 import ReactQuill from "react-quill";
@@ -23,8 +23,8 @@ function HistorecalTampUpdate() {
     double: "",
     triple: "",
   });
-    const dayUpdatedNotify = () => toast("Day Updated Successfully");
-    const programUpdatedNotify = () => toast("Demestic Added Successfully");
+  const dayUpdatedNotify = () => toast("Day Updated Successfully");
+  const programUpdatedNotify = () => toast("Demestic Added Successfully");
   const updateHotel = async (e, HotelItem) => {
     e.preventDefault();
     // console.log(newPack);
@@ -42,15 +42,15 @@ function HistorecalTampUpdate() {
     console.log(newHotels);
     setData({ ...data, hotels: newHotels });
   };
-    const updatedDaysF = (id) => {
-        let updatedDaysArr = data?.itenary?.map((day) =>
-          day.id === id ? { id: day.id, ...newDay } : day
-        );
-        setData({...data,itenary:updatedDaysArr})
-        // console.log(updatedDaysArr);
-        console.log(data);
-        dayUpdatedNotify()
-      };
+  const updatedDaysF = (id) => {
+    let updatedDaysArr = data?.itenary?.map((day) =>
+      day.id === id ? { id: day.id, ...newDay } : day
+    );
+    setData({ ...data, itenary: updatedDaysArr });
+    // console.log(updatedDaysArr);
+    console.log(data);
+    dayUpdatedNotify();
+  };
   // console.log(data);
   const deleteHotel = (e, hotelId) => {
     e.preventDefault();
@@ -72,28 +72,43 @@ function HistorecalTampUpdate() {
   //     handleSubmit();
   //   };
   const getItemById = async () => {
-    const response = await axios.get(`${API_URL}/programs/${id}`);
-    const domData =  response.data;
-    // console.log(domData);
-    setData(domData);
-    setHotels(domData?.hotels);
+    try {
+      // const response = await axios.get(`${API_URL}/programs/${id}`);
+      const response = await axios.get(`${MONGODB_URL}/getProgramDetails/${id}`);
+      const domData = response.data;
+      // console.log(domData);
+      setData(domData);
+      setHotels(domData?.hotels);
+    } catch (e) {
+      console.log("====================================");
+      console.log(e);
+      console.log("====================================");
+    }
+
     console.log(data);
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await axios
-      .patch(`${API_URL}/programs/${id}`, data)
-      .then((res) => {
-        console.log(res);
-        // domesticNotify();
-        getItemById();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    console.log(data);
-    programUpdatedNotify()
+    // e.preventDefault();
+    try {
+      await axios
+        // .patch(`${API_URL}/programs/${id}`, data)
+        .patch(`${MONGODB_URL}/updateProgramDetails/${id}`, data)
+        .then((res) => {
+          console.log(res);
+          // domesticNotify();
+          getItemById();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      console.log(data);
+      programUpdatedNotify();
+    } catch (e) {
+      console.log("====================================");
+      console.log(e);
+      console.log("====================================");
+    }
   };
 
   const updatedDays = () => {
@@ -611,29 +626,30 @@ function HistorecalTampUpdate() {
                 />
                 <button
                   className="btn btn-primary m-5"
-                  onClick={()=>updatedDaysF(day.id)
-                  //   let oldDayId = day.id;
-                  //   // newDays.push({
-                  //   //   id: day.id,
-                  //   //   ...newDay,
-                  //   // });
-                  //   // console.log(newDays);
+                  onClick={
+                    () => updatedDaysF(day.id)
+                    //   let oldDayId = day.id;
+                    //   // newDays.push({
+                    //   //   id: day.id,
+                    //   //   ...newDay,
+                    //   // });
+                    //   // console.log(newDays);
 
-                  //   let UpdatesDays = data?.itenary?.map((day) => {
-                  //     console.log(day.id , oldDayId);
-                  //     console.log({
-                  //     id: day.id,
-                  //     ...newDay,
-                  //   });
-                  //     if (day.id === oldDayId.id) {
-                  //       return "hello";
-                  //     } else {
-                  //       return day;
-                  //     }
-                  //   });
-                  //   console.log(UpdatesDays);
-                  // }
-              }
+                    //   let UpdatesDays = data?.itenary?.map((day) => {
+                    //     console.log(day.id , oldDayId);
+                    //     console.log({
+                    //     id: day.id,
+                    //     ...newDay,
+                    //   });
+                    //     if (day.id === oldDayId.id) {
+                    //       return "hello";
+                    //     } else {
+                    //       return day;
+                    //     }
+                    //   });
+                    //   console.log(UpdatesDays);
+                    // }
+                  }
                 >
                   Add New Day
                 </button>

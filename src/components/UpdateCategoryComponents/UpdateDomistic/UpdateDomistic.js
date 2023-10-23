@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { API_URL } from "../../../envData";
+import { API_URL, MONGODB_URL } from "../../../envData";
 import { Form, Button } from "react-bootstrap";
 import QuillToolbar, { formats, modules } from "../../Editor/EditorToolbar";
 import ReactQuill from "react-quill";
-import "./UpdateDomistic.scss"
+import "./UpdateDomistic.scss";
 function UpdateDomestic() {
   const { id } = useParams();
   // console.log(id);
@@ -20,75 +20,91 @@ function UpdateDomestic() {
     double: "",
     triple: "",
   });
-  const updatePack = async (e,packItem) => {
+
+    const getItemById = async () => {
+      try {
+        // const response = await axios.get(`${API_URL}/domestics/${id}`);
+        const response = await axios.get(
+          `${MONGODB_URL}/getDomesticDetails/${id}`
+        );
+        const domData = response.data;
+        console.log(domData);
+        setData(domData);
+        setPacks(domData.packages);
+      } catch (e) {
+        console.log("====================================");
+        console.log(e);
+        console.log("====================================");
+      }
+
+      // console.log(data);
+    };
+  const updatePack = async (e, packItem) => {
     e.preventDefault();
     // console.log(newPack);
     // packs.push(newPack);
     // console.log(packs);
     // console.log(packs);
     // console.log(newPack);
-    
+
     // const packIndex =  packs.findIndex((pack)=>{
-        //     return pack.id === packId
-        // })
-        const newPacks = packs.map((pack)=> pack == packItem ? newPack : pack);
-        console.log(newPacks);
-        setData({ ...data, packages: newPacks });
+    //     return pack.id === packId
+    // })
+    const newPacks = packs.map((pack) => (pack == packItem ? newPack : pack));
+    console.log(newPacks);
+    setData({ ...data, packages: newPacks });
     // console.log(index);
     // delete packs[packIndex]
     // console.log(packs);
-//    const splicePacks =  packs.splice(packIndex,1);
-//     const newPacks = packs.filter((pack)=> pack.id !== splicePacks.id);
-//     // packs.push(newPack);
-//     newPacks.push(newPack)
-//     console.log(newPacks);
-
+    //    const splicePacks =  packs.splice(packIndex,1);
+    //     const newPacks = packs.filter((pack)=> pack.id !== splicePacks.id);
+    //     // packs.push(newPack);
+    //     newPacks.push(newPack)
+    //     console.log(newPacks);
 
     //   sendForm.current.value = "";
     //   packageNotify();
   };
-  const deletePack = (e,packId)=>{
-    e.preventDefault()
-   const filterPacks =  data?.packages?.filter((pack)=> pack.id !== packId );
-   console.log(filterPacks);
-   setData({ ...data, packages: filterPacks });
-
-  }
-  const addNewPack = (e)=>{
-        e.preventDefault();
-        // console.log({ ...data, packages: packs });
-        let rand = Math.floor(Math.random()  * 1000000000000000)
-        console.log(rand);
-        packs.push({id:rand,...newPack});
-        console.log({id:rand,...newPack});
-        // console.log(packs);
-        setData({ ...data, packages: packs });
-        // sendForm.current.value = "";
-        // packageNotify();
-        handleSubmit()
-        
-  }
-  const getItemById = async () => {
-    const response = await axios.get(`${API_URL}/domestics/${id}`);
-    const domData = response.data;
-    // console.log(domData);
-    setData(domData);
-    setPacks(domData.packages);
-    // console.log(data);
+  const deletePack = (e, packId) => {
+    e.preventDefault();
+    const filterPacks = data?.packages?.filter((pack) => pack.id !== packId);
+    console.log(filterPacks);
+    setData({ ...data, packages: filterPacks });
   };
+  const addNewPack = (e) => {
+    e.preventDefault();
+    // console.log({ ...data, packages: packs });
+    let rand = Math.floor(Math.random() * 1000000000000000);
+    console.log(rand);
+    packs.push({ id: rand, ...newPack });
+    console.log({ id: rand, ...newPack });
+    // console.log(packs);
+    setData({ ...data, packages: packs });
+    // sendForm.current.value = "";
+    // packageNotify();
+    handleSubmit();
+  };
+
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
-    await axios
-      .patch(`${API_URL}/domestics/${id}`, data)
-      .then((res) => {
-        console.log(res);
-        // domesticNotify();
-        getItemById();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      await axios
+        .patch(`${MONGODB_URL}/updateDomesticDetails/${id}`, data)
+        // .patch(`${API_URL}/domestics/${id}`, data)
+        .then((res) => {
+          console.log(res);
+          // domesticNotify();
+          getItemById();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (e) {
+      console.log("====================================");
+      console.log(e);
+      console.log("====================================");
+    }
   };
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -131,7 +147,6 @@ function UpdateDomestic() {
 
   useEffect(() => {
     getItemById();
-    
   }, []);
 
   return (
@@ -336,7 +351,7 @@ function UpdateDomestic() {
                 <h4>Terms And Conditions</h4>
                 <QuillToolbar />
                 <ReactQuill
-                  value={data?.termsAndConditions}
+                  // value={data?.termsAndConditions}
                   onChange={handleTermsChange}
                   modules={modules}
                   formats={formats}
@@ -345,27 +360,27 @@ function UpdateDomestic() {
               <br />
               <div>
                 <h4>Cancellation Polices</h4>
-                {/* <EditorToolbar /> */}
+
                 <ReactQuill
-                  value={data?.cancellation}
+                  // value={data?.cancellation}
                   onChange={handlecancellationChange}
                 />
               </div>
               <br />
               <div>
                 <h4>Children Polices</h4>
-                {/* <QuillToolbar /> */}
+
                 <ReactQuill
-                  value={data?.childrenPolices}
+                  // value={data?.childrenPolices}
                   onChange={handleChildrenChange}
                 />
               </div>
               <br />
               <div>
                 <h4>Required Documents</h4>
-                {/* <QuillToolbar /> */}
+
                 <ReactQuill
-                  value={data?.requiredDocs}
+                  // value={data?.requiredDocs}
                   onChange={handleRequiredDocsChange}
                 />
               </div>

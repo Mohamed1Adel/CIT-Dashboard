@@ -8,11 +8,12 @@ import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_URL, MONGODB_URL } from "../../envData";
 function NileCruise() {
   const sendForm = useRef();
   const [postImage, setPostImage] = useState([]);
-    const [day, setDay] = useState([]);
-    const [days, setDays] = useState([]);
+  const [day, setDay] = useState([]);
+  const [days, setDays] = useState([]);
   const [packs, setPacks] = useState([]);
   const [pack, setPack] = useState({
     packTitle: "4 Days / 3 Nights",
@@ -34,41 +35,51 @@ function NileCruise() {
     box10: "",
     images: [],
     packages: [],
-    itenary:[],
+    itenary: [],
     termsAndConditions: "",
     cancellation: "",
     hotOffer: false,
     nileCruise: false,
   });
-    const addNewDay = (e) => {
-      e.preventDefault();
-      days.push({ id: Math.floor(Math.random() * 10000000), ...day });
-
-      console.log(days);
-      setNileCruise({ ...nileCruise, itenary: days });
-    };
-    const showDays =
-      days?.length >= 1
-        ? days?.map((day) => {
-            return (
-              <li key={day.id}>
-                <h3>{day.dayTitle}</h3>
-                <p>{day.dayContent}</p>
-              </li>
-            );
-          })
-        : "no days founded";
-  const handleSubmit = async (e) => {
+  const addNewDay = (e) => {
     e.preventDefault();
-    await axios
-      .post("http://localhost:9000/nileCruise", {id: Math.floor(Math.random() * 1000000000000000), ...nileCruise})
-      .then((res) => {
-        console.log(res);
-        NileCruiseNotify();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    days.push({ id: Math.floor(Math.random() * 10000000), ...day });
+
+    console.log(days);
+    setNileCruise({ ...nileCruise, itenary: days });
+  };
+  const showDays =
+    days?.length >= 1
+      ? days?.map((day) => {
+          return (
+            <li key={day.id}>
+              <h3>{day.dayTitle}</h3>
+              <p>{day.dayContent}</p>
+            </li>
+          );
+        })
+      : "no days founded";
+  const handleSubmit = async (e) => {
+    // e.preventDefault();
+    try {
+      await axios
+        .post(
+          `${MONGODB_URL}/addNileCruise`,
+
+          nileCruise
+        )
+        .then((res) => {
+          console.log(res);
+          NileCruiseNotify();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (e) {
+      console.log("====================================");
+      console.log(e);
+      console.log("====================================");
+    }
     console.log(nileCruise);
   };
   const addNewPack = async (e) => {
@@ -94,12 +105,12 @@ function NileCruise() {
   // const handleRequiredDocsChange = (value) => {
   //   setNileCruise({ ...nileCruise, requiredDocs: value });
   // };
-    const handleItenaryContentChange = (value) => {
-      setDay({ ...day, dayContent: value });
-    };
-    const handleOtionalTourChange = (value) => {
-      setDay({ ...day, optTour: value });
-    };
+  const handleItenaryContentChange = (value) => {
+    setDay({ ...day, dayContent: value });
+  };
+  const handleOtionalTourChange = (value) => {
+    setDay({ ...day, optTour: value });
+  };
   const maxNumber = 69;
   const onChange = (imageList, addUpdateIndex) => {
     setNileCruise({ ...nileCruise, images: imageList });
