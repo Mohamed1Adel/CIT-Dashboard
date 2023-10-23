@@ -46,24 +46,11 @@ function Domistics() {
     nileCruise: false,
   });
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-    try {
-      // await axios
-      //   .post(`${API_URL}/domestics`, {
-      //     id: Math.floor(Math.random() * 1000000000000000),
-      //     ...domestic,
-      //   })
-      //   .then((res) => {
-      //     console.log(res);
-      //     domesticNotify();
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
-      await axios({
-        method: "post",
-        url: `${MONGODB_URL}/addDomestic`,
-        data: { ...domestic },
+    e.preventDefault();
+    await axios
+      .post("http://localhost:9000/domestics", {
+        id: Math.floor(Math.random() * 1000000000000000),
+        ...domestic,
       })
         .then((res) => {
           console.log(res);
