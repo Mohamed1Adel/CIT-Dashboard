@@ -66,7 +66,7 @@ function DayTours() {
       : "no days founded";
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     try {
       await axios
         .post(`${MONGODB_URL}/addDayTour`, dayTour)

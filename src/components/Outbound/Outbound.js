@@ -36,11 +36,8 @@ function Outbound() {
     packInclude: "",
     visa: "",
     flyDetails: "",
-    itenary: [
-
-    ],
-    PackhotelsAndPrices: [
-    ],
+    itenary: [],
+    PackhotelsAndPrices: [],
   });
   const addNewDay = (e) => {
     e.preventDefault();
@@ -63,20 +60,20 @@ function Outbound() {
   // console.log(showDays);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-    await axios
-      .post(`${MONGODB_URL}/addOutbound`, outbound)
-      .then((res) => {
-        console.log(res);
-        domesticNotify();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    }catch(e){
-      console.log('====================================');
+    try {
+      await axios
+        .post(`${MONGODB_URL}/addOutbound`, outbound)
+        .then((res) => {
+          console.log(res);
+          domesticNotify();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (e) {
+      console.log("====================================");
       console.log(e);
-      console.log('====================================');
+      console.log("====================================");
     }
 
     console.log(outbound);

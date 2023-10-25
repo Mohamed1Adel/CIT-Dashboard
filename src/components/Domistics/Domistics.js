@@ -46,12 +46,12 @@ function Domistics() {
     nileCruise: false,
   });
   const handleSubmit = async (e) => {
+    try{
     e.preventDefault();
     await axios
-      .post("http://localhost:9000/domestics", {
-        id: Math.floor(Math.random() * 1000000000000000),
-        ...domestic,
-      })
+      .post("http://localhost:9000/domestics",
+        domestic
+      )
         .then((res) => {
           console.log(res);
           domesticNotify();

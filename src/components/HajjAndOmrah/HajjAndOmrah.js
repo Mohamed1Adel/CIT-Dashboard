@@ -62,7 +62,7 @@ function HajjOmrah() {
       : "no days founded";
   // console.log(showDays);
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     try {
       await axios
         .post(`${MONGODB_URL}/addHajjOmrah`, hajjOmrah)
@@ -102,7 +102,6 @@ function HajjOmrah() {
     });
     console.log(hotels);
     setHajjOmrah({
-      id: Math.floor(Math.random() * 1000000000000000),
       ...hajjOmrah,
       PackhotelsAndPrices: hotels,
     });

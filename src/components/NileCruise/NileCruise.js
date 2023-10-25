@@ -60,7 +60,7 @@ function NileCruise() {
         })
       : "no days founded";
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     try {
       await axios
         .post(
