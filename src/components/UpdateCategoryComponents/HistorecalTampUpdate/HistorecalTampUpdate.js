@@ -36,9 +36,38 @@ function HistorecalTampUpdate() {
     // const packIndex =  packs.findIndex((pack)=>{
     //     return pack.id === packId
     // })
-    const newHotels = hotels.map((hotel) =>
-      hotel == HotelItem ? { id: hotel.id, ...newHotel } : hotel
-    );
+    const newHotels = hotels.map((hotel) => {
+      return hotel == HotelItem
+        ? {
+            id: hotel.id,
+            single:
+              newHotel.single === undefined
+                ? HotelItem.single
+                : newHotel.single,
+            double:
+              newHotel.double === undefined
+                ? HotelItem.double
+                : newHotel.double,
+            triple:
+              newHotel.triple === undefined
+                ? HotelItem.triple
+                : newHotel.triple,
+            from:
+              newHotel.from === undefined
+                ? HotelItem.from
+                : newHotel.from,
+            to:
+              newHotel.to === undefined
+                ? HotelItem.to
+                : newHotel.to,
+            hotelTitle:
+              newHotel.hotelTitle === undefined
+                ? HotelItem.hotelTitle
+                : newHotel.hotelTitle,
+
+          }
+        : hotel;
+    });
     console.log(newHotels);
     setData({ ...data, hotels: newHotels });
   };
@@ -74,7 +103,9 @@ function HistorecalTampUpdate() {
   const getItemById = async () => {
     try {
       // const response = await axios.get(`${API_URL}/programs/${id}`);
-      const response = await axios.get(`${MONGODB_URL}/getProgramDetails/${id}`);
+      const response = await axios.get(
+        `${MONGODB_URL}/getProgramDetails/${id}`
+      );
       const domData = response.data;
       // console.log(domData);
       setData(domData);
