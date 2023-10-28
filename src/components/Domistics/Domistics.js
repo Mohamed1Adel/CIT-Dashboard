@@ -46,12 +46,11 @@ function Domistics() {
     nileCruise: false,
   });
   const handleSubmit = async (e) => {
-    try{
-    e.preventDefault();
-    await axios
-      .post("http://localhost:9000/domestics",
-        domestic
-      )
+    try {
+      e.preventDefault();
+      await axios
+        // .post("http://localhost:9000/domestics",
+        .post(`${MONGODB_URL}/addDomestic`, domestic)
         .then((res) => {
           console.log(res);
           domesticNotify();

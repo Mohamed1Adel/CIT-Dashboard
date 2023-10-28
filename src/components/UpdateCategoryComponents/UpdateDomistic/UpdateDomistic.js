@@ -11,34 +11,26 @@ function UpdateDomestic() {
   // console.log(id);
   const [data, setData] = useState();
   const [packs, setPacks] = useState([]);
-  const [newPack, setNewPack] = useState({
-    packTitle: "4 Days / 3 Nights",
-    duration: "summer",
-    startDate: "",
-    endDate: "",
-    single: "",
-    double: "",
-    triple: "",
-  });
+  const [newPack, setNewPack] = useState({});
 
-    const getItemById = async () => {
-      try {
-        // const response = await axios.get(`${API_URL}/domestics/${id}`);
-        const response = await axios.get(
-          `${MONGODB_URL}/getDomesticDetails/${id}`
-        );
-        const domData = response.data;
-        console.log(domData);
-        setData(domData);
-        setPacks(domData.packages);
-      } catch (e) {
-        console.log("====================================");
-        console.log(e);
-        console.log("====================================");
-      }
+  const getItemById = async () => {
+    try {
+      // const response = await axios.get(`${API_URL}/domestics/${id}`);
+      const response = await axios.get(
+        `${MONGODB_URL}/getDomesticDetails/${id}`
+      );
+      const domData = response.data;
+      console.log(domData);
+      setData(domData);
+      setPacks(domData.packages);
+    } catch (e) {
+      console.log("====================================");
+      console.log(e);
+      console.log("====================================");
+    }
 
-      // console.log(data);
-    };
+    // console.log(data);
+  };
   const updatePack = async (e, packItem) => {
     e.preventDefault();
     // console.log(newPack);
@@ -50,7 +42,37 @@ function UpdateDomestic() {
     // const packIndex =  packs.findIndex((pack)=>{
     //     return pack.id === packId
     // })
-    const newPacks = packs.map((pack) => (pack == packItem ? newPack : pack));
+    // const newPacks = packs.map((pack) => (pack == packItem ? newPack : pack));
+    const newPacks = packs.map((pack) => {
+      // console.log(pack);
+      return pack == packItem
+        ? {
+            id: pack.id,
+            packTitle:
+              newPack.packTitle === undefined
+                ? packItem.packTitle
+                : newPack.packTitle,
+            duration:
+              newPack.duration === undefined
+                ? packItem.duration
+                : newPack.duration,
+            startDate:
+              newPack.startDate === undefined
+                ? packItem.startDate
+                : newPack.startDate,
+            endDate:
+              newPack.endDate === undefined
+                ? packItem.endDate
+                : newPack.endDate,
+            single:
+              newPack.single === undefined ? packItem.single : newPack.single,
+            double:
+              newPack.double === undefined ? packItem.double : newPack.double,
+            triple:
+              newPack.triple === undefined ? packItem.triple : newPack.triple,
+          }
+        : pack;
+    });
     console.log(newPacks);
     setData({ ...data, packages: newPacks });
     // console.log(index);
@@ -85,9 +107,8 @@ function UpdateDomestic() {
     handleSubmit();
   };
 
-
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     try {
       await axios
         .patch(`${MONGODB_URL}/updateDomesticDetails/${id}`, data)
@@ -525,7 +546,7 @@ function UpdateDomestic() {
                       {" "}
                       <Form.Group controlId="formFileMultiple" className="mb-3">
                         <select
-                          value={pack.packTitle}
+                          // value={pack.packTitle}
                           onChange={(e) => {
                             setNewPack({
                               ...newPack,
@@ -534,6 +555,7 @@ function UpdateDomestic() {
                           }}
                           class="form-select"
                           aria-label="Select Package"
+                          placeholder={pack.packTitle}
                         >
                           <option selected value="4 Days / 3 Nights">
                             4 Days / 3 Nights
@@ -550,7 +572,7 @@ function UpdateDomestic() {
                     <td>
                       <Form.Group controlId="formFileMultiple" className="mb-3">
                         <select
-                          value={pack.duration}
+                          // value={pack.duration}
                           onChange={(e) => {
                             setNewPack({
                               ...newPack,
@@ -559,6 +581,7 @@ function UpdateDomestic() {
                           }}
                           class="form-select"
                           aria-label="Select Package"
+                          placeholder={pack.duration}
                         >
                           <option selected value="summer">
                             Summer

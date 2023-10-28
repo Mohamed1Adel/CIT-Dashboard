@@ -21,6 +21,7 @@ function OutboundTampUpdate() {
   const dayUpdatedNotify = () => toast("Day Updated Successfully");
   const programUpdatedNotify = () => toast("Demestic Added Successfully");
   const updateHotel = async (e, HotelItem) => {
+    console.log(HotelItem);
     e.preventDefault();
     // console.log(newPack);
     // packs.push(newPack);
@@ -34,13 +35,48 @@ function OutboundTampUpdate() {
     const newHotels = hotels.map((hotel) => {
       console.log(hotelOne);
       console.log(hotelTwo);
+      console.log(newHotel.single);
       return hotel == HotelItem
         ? {
             id: hotel.id,
-            ...newHotel,
+            single:
+              newHotel.single === undefined
+                ? HotelItem.single
+                : newHotel.single,
+            double:
+              newHotel.double === undefined
+                ? HotelItem.double
+                : newHotel.double,
+            triple:
+              newHotel.triple === undefined
+                ? HotelItem.triple
+                : newHotel.triple,
+            child:
+              newHotel.child === undefined ? HotelItem.child : newHotel.child,
             hotel: [
-              { id: Math.floor(Math.random() * 1000000000000000), ...hotelOne },
-              { id: Math.floor(Math.random() * 1000000000000000), ...hotelTwo },
+              {
+                id: Math.floor(Math.random() * 1000000000000000),
+
+                hotelName:
+                  hotelOne.hotelName === undefined
+                    ? HotelItem.hotel[0].hotelName
+                    : hotelOne.hotelName,
+                hotelLocation:
+                  hotelOne.hotelLocation === undefined
+                    ? HotelItem.hotel[0].hotelLocation
+                    : hotelOne.hotelLocation,
+              },
+              {
+                id: Math.floor(Math.random() * 1000000000000000),
+                hotelName:
+                  hotelTwo.hotelName === undefined
+                    ? HotelItem.hotel[1].hotelName
+                    : hotelTwo.hotelName,
+                hotelLocation:
+                  hotelTwo.hotelLocation === undefined
+                    ? HotelItem.hotel[1].hotelLocation
+                    : hotelTwo.hotelLocation,
+              },
             ],
           }
         : hotel;
@@ -66,23 +102,25 @@ function OutboundTampUpdate() {
     console.log(filterHotels);
     setData({ ...data, PackhotelsAndPrices: filterHotels });
   };
-  //   const addNewPack = (e) => {
-  //     e.preventDefault();
-  //     // console.log({ ...data, packages: packs });
-  //     let rand = Math.floor(Math.random() * 1000000000000000);
-  //     console.log(rand);
-  //     hotels.push({ id: rand, ...newHotel });
-  //     console.log({ id: rand, ...newHotel });
-  //     // console.log(packs);
-  //     setData({ ...data, packages: hotels });
-  //     // sendForm.current.value = "";
-  //     // packageNotify();
-  //     handleSubmit();
-  //   };
+    const addNewPack = (e) => {
+      e.preventDefault();
+      // console.log({ ...data, packages: packs });
+      let rand = Math.floor(Math.random() * 1000000000000000);
+      console.log(rand);
+      hotels.push({ id: rand, ...newHotel });
+      console.log({ id: rand, ...newHotel });
+      // console.log(packs);
+      setData({ ...data, packages: hotels });
+      // sendForm.current.value = "";
+      // packageNotify();
+      handleSubmit();
+    };
   const getItemById = async () => {
     try {
       // const response = await axios.get(`${API_URL}/outbound/${id}`);
-      const response = await axios.get(`${MONGODB_URL}/getOutboundDetails/${id}`);
+      const response = await axios.get(
+        `${MONGODB_URL}/getOutboundDetails/${id}`
+      );
       const domData = response.data;
       console.log(domData);
       setData(domData);
@@ -97,7 +135,7 @@ function OutboundTampUpdate() {
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     try {
       await axios
         .patch(`${MONGODB_URL}/updateOutboundDetails/${id}`, data)
@@ -368,7 +406,7 @@ function OutboundTampUpdate() {
                               });
                             }}
                             type="text"
-                            // placeholder={hotel?.hotel[0]?.hotelLocation}
+                            placeholder={hotel?.hotel[0]?.hotelLocation}
                           />
                         </Form.Group>
                       </th>
@@ -387,7 +425,7 @@ function OutboundTampUpdate() {
                               });
                             }}
                             type="text"
-                            // placeholder={hotel?.hotel[1]?.hotelLocation}
+                            placeholder={hotel?.hotel[1]?.hotelLocation}
                           />
                         </Form.Group>
                       </th>
@@ -409,7 +447,7 @@ function OutboundTampUpdate() {
                               });
                             }}
                             type="text"
-                            // placeholder={hotel?.hotel[0]?.hotelName}
+                            placeholder={hotel?.hotel[0]?.hotelName}
                           />
                         </Form.Group>
                       </th>
@@ -428,7 +466,7 @@ function OutboundTampUpdate() {
                               });
                             }}
                             type="text"
-                            // placeholder={hotel?.hotel[1]?.hotelName}
+                            placeholder={hotel?.hotel[1]?.hotelName}
                           />
                         </Form.Group>
                       </th>
@@ -453,6 +491,10 @@ function OutboundTampUpdate() {
                         <Form.Control
                           //   value={pack.single}
                           onChange={(e) => {
+                            let si =
+                              e.target.value == ""
+                                ? hotel.single
+                                : e.target.value;
                             setNewHotel({
                               ...newHotel,
                               single: e.target.value,
@@ -468,6 +510,10 @@ function OutboundTampUpdate() {
                         <Form.Control
                           //   value={pack.double}
                           onChange={(e) => {
+                            let du =
+                              e.target.value == ""
+                                ? hotel.double
+                                : e.target.value;
                             setNewHotel({
                               ...newHotel,
                               double: e.target.value,
@@ -483,6 +529,10 @@ function OutboundTampUpdate() {
                         <Form.Control
                           //   value={pack.triple}
                           onChange={(e) => {
+                            let tri =
+                              e.target.value == ""
+                                ? hotel.triple
+                                : e.target.value;
                             setNewHotel({
                               ...newHotel,
                               triple: e.target.value,
@@ -498,6 +548,10 @@ function OutboundTampUpdate() {
                         <Form.Control
                           //   value={pack.triple}
                           onChange={(e) => {
+                            let ch =
+                              e.target.value == ""
+                                ? hotel.child
+                                : e.target.value;
                             setNewHotel({
                               ...newHotel,
                               child: e.target.value,
