@@ -14,12 +14,6 @@ function NileCruiseTempUpdate() {
   const [newDay, setNewDay] = useState();
   const [packs, setPacks] = useState([]);
   const [newPack, setNewPack] = useState({
-    packTitle: "4 Days / 3 Nights",
-    startDate: "",
-    endDate: "",
-    single: "",
-    double: "",
-    triple: "",
   });
   const dayUpdatedNotify = () => toast("Day Updated Successfully");
   const getItemById = async () => {
@@ -49,7 +43,35 @@ function NileCruiseTempUpdate() {
     // const packIndex =  packs.findIndex((pack)=>{
     //     return pack.id === packId
     // })
-    const newPacks = packs.map((pack) => (pack == packItem ? newPack : pack));
+    const newPacks = packs.map((pack) =>{
+      console.log(pack);
+      console.log(packItem);
+     return pack == packItem
+      ? {
+            id: pack.id,
+            _id: pack._id,
+            single:
+              newPack.single === undefined ? packItem.single : newPack.single,
+            double:
+              newPack.double === undefined ? packItem.double : newPack.double,
+            triple:
+              newPack.triple === undefined ? packItem.triple : newPack.triple,
+            startDate:
+              newPack.startDate === undefined
+                ? packItem.startDate
+                : newPack.startDate,
+            endDate:
+              newPack.endDate === undefined
+                ? packItem.endDate
+                : newPack.endDate,
+            packTitle:
+              newPack.packTitle === undefined
+                ? packItem.packTitle
+                : newPack.packTitle,
+          }
+          : pack
+        }
+    );
     console.log(newPacks);
     setData({ ...data, packages: newPacks });
     // console.log(index);
@@ -93,7 +115,7 @@ function NileCruiseTempUpdate() {
     dayUpdatedNotify();
   };
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     try {
       await axios
         // .patch(`${API_URL}/nileCruise/${id}`, data)
@@ -509,6 +531,7 @@ function NileCruiseTempUpdate() {
                               packTitle: e.target.value,
                             });
                           }}
+                          placeholder={pack.packTitle}
                           class="form-select"
                           aria-label="Select Package"
                         >

@@ -32,15 +32,48 @@ function HajjOmrahTampUpdate() {
     //     return pack.id === packId
     // })
     const newHotels = hotels.map((hotel) => {
-      console.log(hotelOne);
-      console.log(hotelTwo);
+      console.log(hotel);
+      console.log(HotelItem);
       return hotel == HotelItem
         ? {
             id: hotel.id,
-            ...newHotel,
+            rate: newHotel.rate === undefined ? HotelItem.rate : newHotel.rate,
+            double:
+              newHotel.double === undefined
+                ? HotelItem.double
+                : newHotel.double,
+            triple:
+              newHotel.triple === undefined
+                ? HotelItem.triple
+                : newHotel.triple,
+            Quadruple:
+              newHotel.Quadruple === undefined
+                ? HotelItem.Quadruple
+                : newHotel.Quadruple,
             hotel: [
-              { id: Math.floor(Math.random() * 1000000000000000), ...hotelOne },
-              { id: Math.floor(Math.random() * 1000000000000000), ...hotelTwo },
+              {
+                id: Math.floor(Math.random() * 1000000000000000),
+
+                hotelName:
+                  hotelOne.hotelName === undefined
+                    ? HotelItem.hotel[0].hotelName
+                    : hotelOne.hotelName,
+                hotelLocation:
+                  hotelOne.hotelLocation === undefined
+                    ? HotelItem.hotel[0].hotelLocation
+                    : hotelOne.hotelLocation,
+              },
+              {
+                id: Math.floor(Math.random() * 1000000000000000),
+                hotelName:
+                  hotelTwo.hotelName === undefined
+                    ? HotelItem.hotel[1].hotelName
+                    : hotelTwo.hotelName,
+                hotelLocation:
+                  hotelTwo.hotelLocation === undefined
+                    ? HotelItem.hotel[1].hotelLocation
+                    : hotelTwo.hotelLocation,
+              },
             ],
           }
         : hotel;
@@ -82,7 +115,9 @@ function HajjOmrahTampUpdate() {
   const getItemById = async () => {
     try {
       // const response = await axios.get(`${API_URL}/hajjOmrah/${id}`);
-      const response = await axios.get(`${MONGODB_URL}/getHajjOmrahDetails/${id}`);
+      const response = await axios.get(
+        `${MONGODB_URL}/getHajjOmrahDetails/${id}`
+      );
       const domData = response.data;
       console.log(domData);
       setData(domData);
@@ -97,7 +132,7 @@ function HajjOmrahTampUpdate() {
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     try {
       await axios
         // .patch(`${API_URL}/hajjOmrah/${id}`, data)
@@ -387,7 +422,7 @@ function HajjOmrahTampUpdate() {
                               });
                             }}
                             type="text"
-                            // placeholder={hotel?.hotel[0]?.hotelLocation}
+                            placeholder={hotel?.hotel[0]?.hotelLocation}
                           />
                         </Form.Group>
                       </th>
@@ -406,7 +441,7 @@ function HajjOmrahTampUpdate() {
                               });
                             }}
                             type="text"
-                            // placeholder={hotel?.hotel[1]?.hotelLocation}
+                            placeholder={hotel?.hotel[1]?.hotelLocation}
                           />
                         </Form.Group>
                       </th>
@@ -428,7 +463,7 @@ function HajjOmrahTampUpdate() {
                               });
                             }}
                             type="text"
-                            // placeholder={hotel?.hotel[0]?.hotelName}
+                            placeholder={hotel?.hotel[0]?.hotelName}
                           />
                         </Form.Group>
                       </th>
@@ -447,7 +482,7 @@ function HajjOmrahTampUpdate() {
                               });
                             }}
                             type="text"
-                            // placeholder={hotel?.hotel[1]?.hotelName}
+                            placeholder={hotel?.hotel[1]?.hotelName}
                           />
                         </Form.Group>
                       </th>

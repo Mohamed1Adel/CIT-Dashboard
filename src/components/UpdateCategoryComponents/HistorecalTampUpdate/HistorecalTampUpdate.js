@@ -16,12 +16,7 @@ function HistorecalTampUpdate() {
   const [newDays, setNewDays] = useState([]);
   const [i, setI] = useState(0);
   const [newHotel, setNewHotel] = useState({
-    hotelTitle: "3 Stars Hotel",
-    from: "",
-    to: "",
-    single: "",
-    double: "",
-    triple: "",
+
   });
   const dayUpdatedNotify = () => toast("Day Updated Successfully");
   const programUpdatedNotify = () => toast("Demestic Added Successfully");
@@ -36,10 +31,14 @@ function HistorecalTampUpdate() {
     // const packIndex =  packs.findIndex((pack)=>{
     //     return pack.id === packId
     // })
+    // console.log(HotelItem);
     const newHotels = hotels.map((hotel) => {
+      console.log(hotel);
+      console.log(HotelItem);
       return hotel == HotelItem
         ? {
             id: hotel.id,
+            _id: hotel._id,
             single:
               newHotel.single === undefined
                 ? HotelItem.single
@@ -52,19 +51,12 @@ function HistorecalTampUpdate() {
               newHotel.triple === undefined
                 ? HotelItem.triple
                 : newHotel.triple,
-            from:
-              newHotel.from === undefined
-                ? HotelItem.from
-                : newHotel.from,
-            to:
-              newHotel.to === undefined
-                ? HotelItem.to
-                : newHotel.to,
+            from: newHotel.from === undefined ? HotelItem.from : newHotel.from,
+            to: newHotel.to === undefined ? HotelItem.to : newHotel.to,
             hotelTitle:
               newHotel.hotelTitle === undefined
                 ? HotelItem.hotelTitle
                 : newHotel.hotelTitle,
-
           }
         : hotel;
     });
@@ -120,7 +112,7 @@ function HistorecalTampUpdate() {
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     try {
       await axios
         // .patch(`${API_URL}/programs/${id}`, data)

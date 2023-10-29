@@ -19,7 +19,9 @@ function DayTourTempUpdate() {
   const getItemById = async () => {
     try {
       // const response = await axios.get(`${API_URL}/dayTour/${id}`);
-      const response = await axios.get(`${MONGODB_URL}/getDayTourDetails/${id}`);
+      const response = await axios.get(
+        `${MONGODB_URL}/getDayTourDetails/${id}`
+      );
       const domData = response.data;
       // console.log(domData);
       setData(domData);
@@ -46,12 +48,28 @@ function DayTourTempUpdate() {
     setData({ ...data, rates: packs });
     // sendForm.current.value = "";
     // packageNotify();
-    handleSubmit();
   };
 
   const updatePack = async (e, packItem) => {
     e.preventDefault();
-    const newPacks = packs.map((pack) => (pack == packItem ? newPack : pack));
+    const newPacks = packs.map((pack) =>
+      pack == packItem
+        ? {
+            persons:
+              newPack.persons === undefined
+                ? packItem.persons
+                : newPack.persons,
+            carType:
+              newPack.carType === undefined
+                ? packItem.carType
+                : newPack.carType,
+            costPerPerson:
+              newPack.costPerPerson === undefined
+                ? packItem.costPerPerson
+                : newPack.costPerPerson,
+          }
+        : pack
+    );
     console.log(newPacks);
     setData({ ...data, rates: newPacks });
   };
@@ -63,7 +81,7 @@ function DayTourTempUpdate() {
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     try {
       await axios
         // .patch(`${API_URL}/dayTour/${id}`, data)
