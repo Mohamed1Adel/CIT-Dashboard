@@ -101,10 +101,21 @@ function UpdateSliderImages() {
       // setPostImage([{ ...postImage, myFile: base64 }]);
       // setData({ ...data, images: allImages });
       // console.log(data);
-      console.log(allImages);
-      await axios.patch(`${MONGODB_URL}/updateMainSlider`, {
-        images: allImages,
-      });
+      // console.log(allImages);
+      // await axios.patch(`${MONGODB_URL}/updateMainSlider`, {
+      //   images: allImages,
+      // });
+      const response = await axios.get(`${MONGODB_URL}/getMainSlider`);
+      const id = await response.data[0]._id;
+
+      if (allImages.length >= file.length) {
+        console.log("done");
+        await axios.patch(`${MONGODB_URL}/updateMainSlider/${id}`, {
+          images: allImages,
+        });
+        break;
+      }
+      console.log(allImages, file.length);
     }
   };
   const handleUpdateTransportasionSlider = async (e) => {
