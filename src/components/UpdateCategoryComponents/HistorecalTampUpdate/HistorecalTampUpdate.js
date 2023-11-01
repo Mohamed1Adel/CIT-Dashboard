@@ -22,16 +22,6 @@ function HistorecalTampUpdate() {
   const programUpdatedNotify = () => toast("Demestic Added Successfully");
   const updateHotel = async (e, HotelItem) => {
     e.preventDefault();
-    // console.log(newPack);
-    // packs.push(newPack);
-    // console.log(packs);
-    // console.log(packs);
-    // console.log(newPack);
-
-    // const packIndex =  packs.findIndex((pack)=>{
-    //     return pack.id === packId
-    // })
-    // console.log(HotelItem);
     const newHotels = hotels.map((hotel) => {
       console.log(hotel);
       console.log(HotelItem);
@@ -79,19 +69,6 @@ function HistorecalTampUpdate() {
     console.log(filterHotels);
     setData({ ...data, hotels: filterHotels });
   };
-  //   const addNewPack = (e) => {
-  //     e.preventDefault();
-  //     // console.log({ ...data, packages: packs });
-  //     let rand = Math.floor(Math.random() * 1000000000000000);
-  //     console.log(rand);
-  //     hotels.push({ id: rand, ...newHotel });
-  //     console.log({ id: rand, ...newHotel });
-  //     // console.log(packs);
-  //     setData({ ...data, packages: hotels });
-  //     // sendForm.current.value = "";
-  //     // packageNotify();
-  //     handleSubmit();
-  //   };
   const getItemById = async () => {
     try {
       // const response = await axios.get(`${API_URL}/programs/${id}`);
@@ -107,10 +84,8 @@ function HistorecalTampUpdate() {
       console.log(e);
       console.log("====================================");
     }
-
     console.log(data);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

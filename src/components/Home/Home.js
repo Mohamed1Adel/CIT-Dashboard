@@ -14,6 +14,7 @@ import OutboundTempUpdate from "../UpdateCategoryComponents/outboundTempUpdate/o
 import NileCruiseTempUpdate from "../UpdateCategoryComponents/NilseCruiseTempUpdate/NilseCruiseTempUpdate";
 import DayTourTampUpdate from "../UpdateCategoryComponents/DayTourTampUpdate/DayTourTampUpdate";
 import HajjOmrahTampUpdate from "../UpdateCategoryComponents/HajjOmrahTempUpdate/HajjOmrahTempUpdate";
+import UpdateSliderImages from "../UpdateCategoryComponents/UpdateSliderImages/UpdateSliderImages";
 function Home() {
   return (
     <div className="">
@@ -38,9 +39,13 @@ function Home() {
             element={<NileCruiseTempUpdate />}
           />
           <Route path="/dayTour" element={<DayTours />} />
-          <Route path="/dayTourTempUpdate/:id" element={<DayTourTampUpdate />} />
+          <Route
+            path="/dayTourTempUpdate/:id"
+            element={<DayTourTampUpdate />}
+          />
           <Route path="/Hajj" element={<HajjAndOmrah />} />
           <Route path="/HajjTempUpdate/:id" element={<HajjOmrahTampUpdate />} />
+          <Route path="/UpdateSliderImages" element={<UpdateSliderImages />} />
         </Routes>
       </div>
     </div>
