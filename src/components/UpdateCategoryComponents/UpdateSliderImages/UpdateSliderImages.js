@@ -28,7 +28,7 @@ function UpdateSliderImages() {
       // setPostImage([{ ...postImage, myFile: base64 }]);
       // setData({ ...data, images: allImages });
       // console.log(data);
-      await axios.post(`${MONGODB_URL}/updateMainSlider`, {
+      await axios.post(`${MONGODB_URL}/mainSlider`, {
         images: allImages,
       });
     }
@@ -44,7 +44,7 @@ function UpdateSliderImages() {
       // setPostImage([{ ...postImage, myFile: base64 }]);
       // setData({ ...data, images: allImages });
       // console.log(data);
-      await axios.post(`${MONGODB_URL}/updateTransportationSlider`, {
+      await axios.post(`${MONGODB_URL}/transportationSlider`, {
         images: allImages,
       });
     }
@@ -60,7 +60,7 @@ function UpdateSliderImages() {
       // setPostImage([{ ...postImage, myFile: base64 }]);
       // setData({ ...data, images: allImages });
       // console.log(data);
-      await axios.post(`${MONGODB_URL}/updateHajjOmrahSlider`, {
+      await axios.post(`${MONGODB_URL}/hajjOmrahSlider`, {
         images: allImages,
       });
     }
