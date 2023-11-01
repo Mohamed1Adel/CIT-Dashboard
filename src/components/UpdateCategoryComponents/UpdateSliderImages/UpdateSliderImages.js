@@ -105,10 +105,10 @@ function UpdateSliderImages() {
       // await axios.patch(`${MONGODB_URL}/updateMainSlider`, {
       //   images: allImages,
       // });
-      const response = await axios.get(`${MONGODB_URL}/getMainSlider`);
-      const id = await response.data[0]._id;
 
       if (allImages.length >= file.length) {
+        const response = await axios.get(`${MONGODB_URL}/getMainSlider`);
+        const id = await response.data[0]._id;
         console.log("done");
         await axios.patch(`${MONGODB_URL}/updateMainSlider/${id}`, {
           images: allImages,
