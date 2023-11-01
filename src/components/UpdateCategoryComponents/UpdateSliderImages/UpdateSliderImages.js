@@ -67,10 +67,15 @@ function UpdateSliderImages() {
       // setPostImage([{ ...postImage, myFile: base64 }]);
       // setData({ ...data, images: allImages });
       // console.log(data);
-      console.log(allImages);
-      await axios.post(`${MONGODB_URL}/transportationSlider`, {
-        images: allImages,
-      });
+
+      if (allImages.length >= file.length) {
+        console.log("done");
+        await axios.post(`${MONGODB_URL}/transportationSlider`, {
+          images: allImages,
+        });
+        break;
+      }
+      console.log(allImages, file.length);
     }
   };
   const handleUploadHajjOmrahSlider = async (e) => {
@@ -84,10 +89,15 @@ function UpdateSliderImages() {
       // setPostImage([{ ...postImage, myFile: base64 }]);
       // setData({ ...data, images: allImages });
       // console.log(data);
-      console.log(allImages);
-      await axios.post(`${MONGODB_URL}/hajjOmrahSlider`, {
-        images: allImages,
-      });
+
+      if (allImages.length >= file.length) {
+        console.log("done");
+        await axios.post(`${MONGODB_URL}/hajjOmrahSlider`, {
+          images: allImages,
+        });
+        break;
+      }
+      console.log(allImages, file.length);
     }
   };
   const handleUpdateMainSlider = async (e) => {
@@ -129,9 +139,16 @@ function UpdateSliderImages() {
       // setData({ ...data, images: allImages });
       // console.log(data);
       console.log(allImages);
-      await axios.patch(`${MONGODB_URL}/updateTransportationSlider`, {
-        images: allImages,
-      });
+            const response = await axios.get(`${MONGODB_URL}/getTransportationSlider`);
+      const id = await response.data[0]._id;
+      if (allImages.length >= file.length) {
+        console.log("done");
+        await axios.patch(`${MONGODB_URL}/updateTransportationSlider/${id}`, {
+          images: allImages,
+        });
+        break;
+      }
+      console.log(allImages, file.length);
     }
   };
   const handleUpdateHajjOmrahSlider = async (e) => {
@@ -149,6 +166,19 @@ function UpdateSliderImages() {
       await axios.patch(`${MONGODB_URL}/updateHajjOmrahSlider`, {
         images: allImages,
       });
+
+                  const response = await axios.get(
+                    `${MONGODB_URL}/getHajjOmrahSlider`
+                  );
+      const id = await response.data[0]._id;
+      if (allImages.length >= file.length) {
+        console.log("done");
+        await axios.patch(`${MONGODB_URL}/updateHajjOmrahSlider/${id}`, {
+          images: allImages,
+        });
+        break;
+      }
+      console.log(allImages, file.length);
     }
   };
   return (
