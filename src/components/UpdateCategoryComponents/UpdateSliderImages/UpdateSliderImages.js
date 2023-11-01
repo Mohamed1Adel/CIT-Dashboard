@@ -28,6 +28,7 @@ function UpdateSliderImages() {
       // setPostImage([{ ...postImage, myFile: base64 }]);
       // setData({ ...data, images: allImages });
       // console.log(data);
+      console.log(allImages);
       await axios.post(`${MONGODB_URL}/mainSlider`, {
         images: allImages,
       });
@@ -44,6 +45,7 @@ function UpdateSliderImages() {
       // setPostImage([{ ...postImage, myFile: base64 }]);
       // setData({ ...data, images: allImages });
       // console.log(data);
+       console.log(allImages);
       await axios.post(`${MONGODB_URL}/transportationSlider`, {
         images: allImages,
       });
@@ -60,6 +62,7 @@ function UpdateSliderImages() {
       // setPostImage([{ ...postImage, myFile: base64 }]);
       // setData({ ...data, images: allImages });
       // console.log(data);
+       console.log(allImages);
       await axios.post(`${MONGODB_URL}/hajjOmrahSlider`, {
         images: allImages,
       });
@@ -76,6 +79,7 @@ function UpdateSliderImages() {
       // setPostImage([{ ...postImage, myFile: base64 }]);
       // setData({ ...data, images: allImages });
       // console.log(data);
+       console.log(allImages);
       await axios.patch(`${MONGODB_URL}/updateMainSlider`, {
         images: allImages,
       });
@@ -92,6 +96,7 @@ function UpdateSliderImages() {
       // setPostImage([{ ...postImage, myFile: base64 }]);
       // setData({ ...data, images: allImages });
       // console.log(data);
+       console.log(allImages);
       await axios.patch(`${MONGODB_URL}/updateTransportationSlider`, {
         images: allImages,
       });
@@ -108,6 +113,7 @@ function UpdateSliderImages() {
       // setPostImage([{ ...postImage, myFile: base64 }]);
       // setData({ ...data, images: allImages });
       // console.log(data);
+       console.log(allImages);
       await axios.patch(`${MONGODB_URL}/updateHajjOmrahSlider`, {
         images: allImages,
       });
