@@ -139,7 +139,9 @@ function UpdateSliderImages() {
       // setData({ ...data, images: allImages });
       // console.log(data);
       console.log(allImages);
-            const response = await axios.get(`${MONGODB_URL}/getTransportationSlider`);
+      const response = await axios.get(
+        `${MONGODB_URL}/getTransportationSlider`
+      );
       const id = await response.data[0]._id;
       if (allImages.length >= file.length) {
         console.log("done");
@@ -167,9 +169,7 @@ function UpdateSliderImages() {
         images: allImages,
       });
 
-                  const response = await axios.get(
-                    `${MONGODB_URL}/getHajjOmrahSlider`
-                  );
+      const response = await axios.get(`${MONGODB_URL}/getHajjOmrahSlider`);
       const id = await response.data[0]._id;
       if (allImages.length >= file.length) {
         console.log("done");
@@ -182,12 +182,12 @@ function UpdateSliderImages() {
     }
   };
   return (
-    <Container>
+    <Container style={{ height: "calc(100vh - 100px)" }}>
       <h1>Update Sliders Images</h1>
       <div className="update-section">
         <Form>
-          <h2>Upload Images</h2>
-          <div className="update-btn-box">
+          {/* <h2>Upload Images</h2> */}
+          {/* <div className="update-btn-box">
             <Form.Group controlId="formFileMultiple" className="mb-3">
               <Form.Label>Upload Images Main Slider</Form.Label>
               <input
@@ -199,13 +199,6 @@ function UpdateSliderImages() {
                 onChange={(e) => handleUploadMainSlider(e)}
               />
             </Form.Group>
-            <button
-              className="btn btn-warning"
-              disabled={mainState}
-              onClick={() => {}}
-            >
-              Upload
-            </button>
           </div>
           <div className="update-btn-box">
             <Form.Group controlId="formFileMultiple" className="mb-3">
@@ -232,7 +225,7 @@ function UpdateSliderImages() {
                 onChange={(e) => handleUploadHajjOmrahSlider(e)}
               />
             </Form.Group>
-          </div>
+          </div> */}
 
           <h2>Update Images</h2>
 
@@ -275,7 +268,6 @@ function UpdateSliderImages() {
               />
             </Form.Group>
           </div>
-          <button type="submit">send</button>
         </Form>
       </div>
     </Container>
