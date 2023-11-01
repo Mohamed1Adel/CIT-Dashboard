@@ -39,6 +39,7 @@ function Historical() {
     box8: "",
     box9: "",
     box10: "",
+    hotOffer: false,
   });
   const addNewDay = (e) => {
     e.preventDefault();
@@ -232,6 +233,19 @@ function Historical() {
                   }}
                   type="text"
                   placeholder="Box 10"
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check
+                  value={program?.hotOffer}
+                  onChange={(e) => {
+                    setProgram({
+                      ...program,
+                      hotOffer: e.currentTarget.checked,
+                    });
+                  }}
+                  type="checkbox"
+                  label="Hot Deal"
                 />
               </Form.Group>
               <Form.Group controlId="formFileMultiple" className="mb-3">

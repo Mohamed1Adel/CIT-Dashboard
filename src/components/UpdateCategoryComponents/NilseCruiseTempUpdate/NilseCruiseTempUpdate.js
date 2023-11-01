@@ -277,6 +277,19 @@ function NileCruiseTempUpdate() {
                   placeholder="Box 10"
                 />
               </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check
+                  value={data?.hotOffer}
+                  onChange={(e) => {
+                    setData({
+                      ...data,
+                      hotOffer: e.currentTarget.checked,
+                    });
+                  }}
+                  type="checkbox"
+                  label="Hot Deal"
+                />
+              </Form.Group>
               <Form.Group controlId="formFileMultiple" className="mb-3">
                 <Form.Label>Upload Images</Form.Label>
                 <input

@@ -32,6 +32,9 @@ function SideMenu() {
           <li className="item">
             <Link to="/Hajj">Hajj & Omrah</Link>
           </li>
+          <li className="item">
+            <Link to="/UpdateSliderImages">Update Slider Images</Link>
+          </li>
         </ul>
       </div>
     </div>

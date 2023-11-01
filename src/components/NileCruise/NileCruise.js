@@ -263,6 +263,19 @@ function NileCruise() {
                   placeholder="Box 10"
                 />
               </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check
+                  value={nileCruise?.hotOffer}
+                  onChange={(e) => {
+                    setNileCruise({
+                      ...nileCruise,
+                      hotOffer: e.currentTarget.checked,
+                    });
+                  }}
+                  type="checkbox"
+                  label="Hot Deal"
+                />
+              </Form.Group>
               <Form.Group controlId="formFileMultiple" className="mb-3">
                 <Form.Label>Upload Images</Form.Label>
                 <input

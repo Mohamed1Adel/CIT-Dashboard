@@ -38,6 +38,7 @@ function Outbound() {
     flyDetails: "",
     itenary: [],
     PackhotelsAndPrices: [],
+    hotOffer: false,
   });
   const addNewDay = (e) => {
     e.preventDefault();
@@ -267,6 +268,19 @@ function Outbound() {
                   }}
                   type="text"
                   placeholder="Box 10"
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check
+                  value={outbound?.hotOffer}
+                  onChange={(e) => {
+                    setOutbound({
+                      ...outbound,
+                      hotOffer: e.currentTarget.checked,
+                    });
+                  }}
+                  type="checkbox"
+                  label="Hot Deal"
                 />
               </Form.Group>
               <Form.Group controlId="formFileMultiple" className="mb-3">

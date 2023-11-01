@@ -247,7 +247,7 @@ function Domistics() {
               <div className="checks">
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                   <Form.Check
-                    value={domestic.hotOffer}
+                    value={domestic?.hotOffer}
                     onChange={(e) => {
                       setDomestic({
                         ...domestic,

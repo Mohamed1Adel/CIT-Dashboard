@@ -41,6 +41,7 @@ function HajjOmrah() {
     cancelationPolices: "",
     itenary: [],
     PackhotelsAndPrices: [],
+    hotOffer: false,
   });
   const addNewDay = (e) => {
     e.preventDefault();
@@ -280,6 +281,19 @@ function HajjOmrah() {
                   }}
                   type="text"
                   placeholder="اختياري"
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check
+                  value={hajjOmrah?.hotOffer}
+                  onChange={(e) => {
+                    setHajjOmrah({
+                      ...hajjOmrah,
+                      hotOffer: e.currentTarget.checked,
+                    });
+                  }}
+                  type="checkbox"
+                  label="Hot Deal"
                 />
               </Form.Group>
               <Form.Group controlId="formFileMultiple" className="mb-3">

@@ -33,6 +33,7 @@ function DayTours() {
     termsAndConditions: "",
     cancellation: "",
     dayTour: false,
+    hotOffer: false,
     rates: [
       {
         id: "",
@@ -243,7 +244,7 @@ function DayTours() {
               <div className="checks">
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                   <Form.Check
-                    value={dayTour.dayTour}
+                    value={dayTour?.dayTour}
                     onChange={(e) => {
                       setDayTour({
                         ...dayTour,
@@ -252,6 +253,19 @@ function DayTours() {
                     }}
                     type="checkbox"
                     label="Day Tour"
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  <Form.Check
+                    value={dayTour?.hotOffer}
+                    onChange={(e) => {
+                      setDayTour({
+                        ...dayTour,
+                        hotOffer: e.currentTarget.checked,
+                      });
+                    }}
+                    type="checkbox"
+                    label="Hot Deal"
                   />
                 </Form.Group>
               </div>
