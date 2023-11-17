@@ -6,6 +6,7 @@ import { Form, Button } from "react-bootstrap";
 import QuillToolbar, { formats, modules } from "../../Editor/EditorToolbar";
 import ReactQuill from "react-quill";
 import "./DayTourTampUpdate.scss";
+import { ToastContainer, toast } from "react-toastify";
 function DayTourTempUpdate() {
   const { id } = useParams();
   // console.log(id);
@@ -46,6 +47,7 @@ function DayTourTempUpdate() {
     console.log({ id: rand, ...newPack });
     // console.log(packs);
     setData({ ...data, rates: packs });
+    packAddedNotify()
     // sendForm.current.value = "";
     // packageNotify();
   };
@@ -72,6 +74,7 @@ function DayTourTempUpdate() {
     );
     console.log(newPacks);
     setData({ ...data, rates: newPacks });
+    packUpdatedNotify()
   };
   const deletePack = (e, packId) => {
     e.preventDefault();
@@ -88,7 +91,7 @@ function DayTourTempUpdate() {
         .patch(`${MONGODB_URL}/updateDayTourDetails/${id}`, data)
         .then((res) => {
           console.log(res);
-          // domesticNotify();
+          dayTourNotify();
           getItemById();
         })
         .catch((err) => {
@@ -138,7 +141,9 @@ function DayTourTempUpdate() {
   const handleRequiredDocsChange = (value) => {
     setData({ ...data, requiredDocs: value });
   };
-
+  const dayTourNotify = () => toast("Day Tour Added Successfully");
+  const packAddedNotify = () => toast("Package Added Successfully");
+  const packUpdatedNotify = () => toast("Package Updated Added Successfully");
   useEffect(() => {
     getItemById();
   }, []);
@@ -510,6 +515,7 @@ function DayTourTempUpdate() {
           </table>
         </Form>
       </div>
+      <ToastContainer />
     </div>
   );
 }

@@ -12,7 +12,7 @@ function SideMenu() {
       <div className="menu-items">
         <ul className="items">
           <li className="item">
-            <Link to="/">AllCategories</Link>
+            <Link to="/all">AllCategories</Link>
           </li>
           <li className="item">
             <Link to="/domestics">Domestics</Link>
@@ -32,9 +32,9 @@ function SideMenu() {
           <li className="item">
             <Link to="/Hajj">Hajj & Omrah</Link>
           </li>
-          <li className="item">
+          {/* <li className="item">
             <Link to="/UpdateSliderImages">Update Slider Images</Link>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>

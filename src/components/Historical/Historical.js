@@ -19,9 +19,8 @@ function Historical() {
     hotelTitle: "3 Stars Hotel",
     from: "",
     to: "",
-    single: "",
-    double: "",
-    triple: "",
+    startingFrom: "",
+
   });
   const [program, setProgram] = useState({
     title: "",
@@ -47,6 +46,7 @@ function Historical() {
 
     console.log(days);
     setProgram({ ...program, itenary: days });
+    dayAddedNotify()
   };
   const showDays =
     days?.length >= 1
@@ -67,7 +67,7 @@ function Historical() {
         .post(`${MONGODB_URL}/addProgram`, program)
         .then((res) => {
           console.log(res);
-          domesticNotify();
+          programAddedNotify();
         })
         .catch((err) => {
           console.log(err);
@@ -142,10 +142,12 @@ function Historical() {
   };
 
   const packageNotify = () => toast("Package Added Successfully");
-  const domesticNotify = () => toast("Demestic Added Successfully");
+  const dayAddedNotify = () => toast("Day Added Successfully");
+  const programAddedNotify = () => toast("Program Added Successfully");
 
   return (
     <div>
+
       <h1 className="main-heading">Historical</h1>
       <div className="form-section main-domestic">
         <Form className="main-form" onSubmit={(e) => handleSubmit(e)}>
@@ -349,32 +351,12 @@ function Historical() {
             <Form.Group className="mb-3" controlId="formBasic">
               <Form.Control
                 ref={sendForm}
-                value={hotel.single}
+                value={hotel.startingFrom}
                 onChange={(e) => {
-                  setHotel({ ...hotel, single: e.target.value });
+                  setHotel({ ...hotel, startingFrom: e.target.value });
                 }}
                 type="text"
-                placeholder="Single"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasic">
-              <Form.Control
-                value={hotel.double}
-                onChange={(e) => {
-                  setHotel({ ...hotel, double: e.target.value });
-                }}
-                type="text"
-                placeholder="double"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasic">
-              <Form.Control
-                value={hotel.triple}
-                onChange={(e) => {
-                  setHotel({ ...hotel, triple: e.target.value });
-                }}
-                type="text"
-                placeholder="triple"
+                placeholder="Starting From"
               />
             </Form.Group>
             <Button className="btn-warning" variant="primary" type="submit">

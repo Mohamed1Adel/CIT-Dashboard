@@ -43,6 +43,7 @@ function DayTours() {
       },
     ],
   });
+  
 
   const handleItenaryContentChange = (value) => {
     setDay({ ...day, dayContent: value });
@@ -53,6 +54,7 @@ function DayTours() {
 
     console.log(days);
     setDayTour({ ...dayTour, itenary: days });
+    dayAddedNotify()
   };
   const showDays =
     days?.length >= 1
@@ -73,7 +75,7 @@ function DayTours() {
         .post(`${MONGODB_URL}/addDayTour`, dayTour)
         .then((res) => {
           console.log(res);
-          domesticNotify();
+          programAddedNotify();
         })
         .catch((err) => {
           console.log(err);
@@ -137,7 +139,8 @@ function DayTours() {
   };
 
   const packageNotify = () => toast("Package Added Successfully");
-  const domesticNotify = () => toast("Demestic Added Successfully");
+  const dayAddedNotify = () => toast("Day Added Successfully");
+  const programAddedNotify = () => toast("Program Added Successfully");
 
   return (
     <div>

@@ -47,6 +47,7 @@ function NileCruise() {
 
     console.log(days);
     setNileCruise({ ...nileCruise, itenary: days });
+    dayAddedNotify()
   };
   const showDays =
     days?.length >= 1
@@ -70,7 +71,7 @@ function NileCruise() {
         )
         .then((res) => {
           console.log(res);
-          NileCruiseNotify();
+          programAddedNotify();
         })
         .catch((err) => {
           console.log(err);
@@ -144,7 +145,8 @@ function NileCruise() {
   };
 
   const packageNotify = () => toast("Package Added Successfully");
-  const NileCruiseNotify = () => toast("Nile Cruise Added Successfully");
+  const dayAddedNotify = () => toast("Day Added Successfully");
+  const programAddedNotify = () => toast("Program Added Successfully");
 
   return (
     <div>

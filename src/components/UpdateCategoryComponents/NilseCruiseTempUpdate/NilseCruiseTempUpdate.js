@@ -6,7 +6,7 @@ import { Form, Button } from "react-bootstrap";
 import QuillToolbar, { formats, modules } from "../../Editor/EditorToolbar";
 import ReactQuill from "react-quill";
 import "./NilseCruiseTempUpdate.scss";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 function NileCruiseTempUpdate() {
   const { id } = useParams();
   // console.log(id);
@@ -16,6 +16,8 @@ function NileCruiseTempUpdate() {
   const [newPack, setNewPack] = useState({
   });
   const dayUpdatedNotify = () => toast("Day Updated Successfully");
+  const programUpdatedNotify = () => toast("Program Added Successfully");
+  const packUpdatedNotify = () => toast("Pack Updated Successfully");
   const getItemById = async () => {
     try {
       // const response = await axios.get(`${API_URL}/nileCruise/${id}`);
@@ -74,6 +76,7 @@ function NileCruiseTempUpdate() {
     );
     console.log(newPacks);
     setData({ ...data, packages: newPacks });
+    packUpdatedNotify()
     // console.log(index);
     // delete packs[packIndex]
     // console.log(packs);
@@ -124,6 +127,7 @@ function NileCruiseTempUpdate() {
           console.log(res);
           // domesticNotify();
           getItemById();
+          programUpdatedNotify()
         })
         .catch((err) => {
           console.log(err);
@@ -869,6 +873,7 @@ function NileCruiseTempUpdate() {
           })}
         </ul>
       </div>
+      <ToastContainer />
     </div>
   );
 }

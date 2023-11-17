@@ -46,6 +46,7 @@ function Outbound() {
 
     console.log(days);
     setOutbound({ ...outbound, itenary: days });
+    dayAddedNotify()
   };
   const showDays =
     days?.length >= 1
@@ -66,7 +67,7 @@ function Outbound() {
         .post(`${MONGODB_URL}/addOutbound`, outbound)
         .then((res) => {
           console.log(res);
-          domesticNotify();
+          programAddedNotify();
         })
         .catch((err) => {
           console.log(err);
@@ -177,7 +178,8 @@ function Outbound() {
   };
 
   const packageNotify = () => toast("Package Added Successfully");
-  const domesticNotify = () => toast("Demestic Added Successfully");
+  const dayAddedNotify = () => toast("Day Added Successfully");
+  const programAddedNotify = () => toast("Program Added Successfully");
 
   return (
     <div>

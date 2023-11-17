@@ -53,7 +53,7 @@ function Domistics() {
         .post(`${MONGODB_URL}/addDomestic`, domestic)
         .then((res) => {
           console.log(res);
-          domesticNotify();
+          programAddedNotify();
         })
         .catch((err) => {
           console.log(err);
@@ -120,7 +120,7 @@ function Domistics() {
   };
 
   const packageNotify = () => toast("Package Added Successfully");
-  const domesticNotify = () => toast("Demestic Added Successfully");
+  const programAddedNotify = () => toast("Program Added Successfully");
 
   return (
     <div>

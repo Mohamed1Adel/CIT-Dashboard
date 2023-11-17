@@ -49,6 +49,7 @@ function HajjOmrah() {
 
     console.log(days);
     setHajjOmrah({ ...hajjOmrah, itenary: days });
+    dayAddedNotify()
   };
   const showDays =
     days?.length >= 1
@@ -69,7 +70,7 @@ function HajjOmrah() {
         .post(`${MONGODB_URL}/addHajjOmrah`, hajjOmrah)
         .then((res) => {
           console.log(res);
-          domesticNotify();
+          programAddedNotify();
         })
         .catch((err) => {
           console.log(err);
@@ -183,10 +184,12 @@ function HajjOmrah() {
   };
 
   const packageNotify = () => toast("Package Added Successfully");
-  const domesticNotify = () => toast("Demestic Added Successfully");
+  const dayAddedNotify = () => toast("Day Added Successfully");
+  const programAddedNotify = () => toast("Program Added Successfully");
 
   return (
     <div dir="rtl">
+
       <h1 className="main-heading">الحج والعمرة</h1>
       <div className="form-section main-domestic">
         <Form className="main-form" onSubmit={(e) => handleSubmit(e)}>

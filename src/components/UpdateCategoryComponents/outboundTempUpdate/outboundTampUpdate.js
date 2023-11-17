@@ -6,7 +6,7 @@ import { Form, Button } from "react-bootstrap";
 import QuillToolbar, { formats, modules } from "../../Editor/EditorToolbar";
 import ReactQuill from "react-quill";
 // import "./HistorecalTampUpdate.scss";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 function OutboundTampUpdate() {
   const { id } = useParams();
   // console.log(id);
@@ -19,7 +19,8 @@ function OutboundTampUpdate() {
   const [hotelOne, setHotelOne] = useState({});
   const [hotelTwo, setHotelTwo] = useState({});
   const dayUpdatedNotify = () => toast("Day Updated Successfully");
-  const programUpdatedNotify = () => toast("Demestic Added Successfully");
+  const programUpdatedNotify = () => toast("program Added Successfully");
+  const packUpdatedNotify = () => toast("Pack Updated Successfully");
   const updateHotel = async (e, HotelItem) => {
     console.log(HotelItem);
     e.preventDefault();
@@ -83,6 +84,7 @@ function OutboundTampUpdate() {
     });
     console.log(newHotels);
     setData({ ...data, PackhotelsAndPrices: newHotels });
+    packUpdatedNotify()
   };
   const updatedDaysF = (id) => {
     let updatedDaysArr = data?.itenary?.map((day) =>
@@ -814,6 +816,7 @@ function OutboundTampUpdate() {
           </button>
         </ul>
       </div>
+      <ToastContainer />
     </div>
   );
 }

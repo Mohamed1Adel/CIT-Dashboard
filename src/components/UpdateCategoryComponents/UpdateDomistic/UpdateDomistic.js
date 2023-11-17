@@ -5,6 +5,7 @@ import { API_URL, MONGODB_URL } from "../../../envData";
 import { Form, Button } from "react-bootstrap";
 import QuillToolbar, { formats, modules } from "../../Editor/EditorToolbar";
 import ReactQuill from "react-quill";
+import { ToastContainer, toast } from "react-toastify";
 import "./UpdateDomistic.scss";
 function UpdateDomestic() {
   const { id } = useParams();
@@ -12,6 +13,10 @@ function UpdateDomestic() {
   const [data, setData] = useState();
   const [packs, setPacks] = useState([]);
   const [newPack, setNewPack] = useState({});
+
+
+  const programUpdatedNotify = () => toast("program Added Successfully");
+  const packUpdatedNotify = () => toast("Pack Updated Successfully");
 
   const getItemById = async () => {
     try {
@@ -75,6 +80,7 @@ function UpdateDomestic() {
     });
     console.log(newPacks);
     setData({ ...data, packages: newPacks });
+    packUpdatedNotify()
     // console.log(index);
     // delete packs[packIndex]
     // console.log(packs);
@@ -117,6 +123,7 @@ function UpdateDomestic() {
           console.log(res);
           // domesticNotify();
           getItemById();
+          programUpdatedNotify()
         })
         .catch((err) => {
           console.log(err);
@@ -821,6 +828,7 @@ function UpdateDomestic() {
           </table>
         </Form>
       </div>
+      <ToastContainer />
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { Form, Button } from "react-bootstrap";
 import QuillToolbar, { formats, modules } from "../../Editor/EditorToolbar";
 import ReactQuill from "react-quill";
 import "./HistorecalTampUpdate.scss";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 function HistorecalTampUpdate() {
   const { id } = useParams();
   // console.log(id);
@@ -19,7 +19,8 @@ function HistorecalTampUpdate() {
 
   });
   const dayUpdatedNotify = () => toast("Day Updated Successfully");
-  const programUpdatedNotify = () => toast("Demestic Added Successfully");
+  const programUpdatedNotify = () => toast("Program Added Successfully");
+  const packUpdatedNotify = () => toast("Pack Updated Successfully");
   const updateHotel = async (e, HotelItem) => {
     e.preventDefault();
     const newHotels = hotels.map((hotel) => {
@@ -29,18 +30,10 @@ function HistorecalTampUpdate() {
         ? {
             id: hotel.id,
             _id: hotel._id,
-            single:
-              newHotel.single === undefined
-                ? HotelItem.single
-                : newHotel.single,
-            double:
-              newHotel.double === undefined
-                ? HotelItem.double
-                : newHotel.double,
-            triple:
-              newHotel.triple === undefined
-                ? HotelItem.triple
-                : newHotel.triple,
+            startingFrom:
+              newHotel.startingFrom === undefined
+                ? HotelItem.startingFrom
+                : newHotel.startingFrom,
             from: newHotel.from === undefined ? HotelItem.from : newHotel.from,
             to: newHotel.to === undefined ? HotelItem.to : newHotel.to,
             hotelTitle:
@@ -52,6 +45,7 @@ function HistorecalTampUpdate() {
     });
     console.log(newHotels);
     setData({ ...data, hotels: newHotels });
+    packUpdatedNotify()
   };
   const updatedDaysF = (id) => {
     let updatedDaysArr = data?.itenary?.map((day) =>
@@ -325,9 +319,7 @@ function HistorecalTampUpdate() {
                 <th scope="col">Hotel</th>
                 <th scope="col">Start data</th>
                 <th scope="col">End data</th>
-                <th scope="col">Single</th>
-                <th scope="col">Double</th>
-                <th scope="col">Triple</th>
+                <th scope="col">Starting From</th>
                 <th scope="col">Update</th>
                 <th scope="col">Delete</th>
               </tr>
@@ -395,41 +387,11 @@ function HistorecalTampUpdate() {
                           onChange={(e) => {
                             setNewHotel({
                               ...newHotel,
-                              single: e.target.value,
+                              startingFrom: e.target.value,
                             });
                           }}
                           type="text"
-                          placeholder={hotel.single}
-                        />
-                      </Form.Group>
-                    </td>
-                    <td>
-                      <Form.Group className="mb-3" controlId="formBasic">
-                        <Form.Control
-                          //   value={pack.double}
-                          onChange={(e) => {
-                            setNewHotel({
-                              ...newHotel,
-                              double: e.target.value,
-                            });
-                          }}
-                          type="text"
-                          placeholder={hotel.double}
-                        />
-                      </Form.Group>
-                    </td>
-                    <td>
-                      <Form.Group className="mb-3" controlId="formBasic">
-                        <Form.Control
-                          //   value={pack.triple}
-                          onChange={(e) => {
-                            setNewHotel({
-                              ...newHotel,
-                              triple: e.target.value,
-                            });
-                          }}
-                          type="text"
-                          placeholder={hotel.triple}
+                          placeholder={hotel.startingFrom}
                         />
                       </Form.Group>
                     </td>
@@ -672,6 +634,7 @@ function HistorecalTampUpdate() {
           </button>
         </ul>
       </div>
+      <ToastContainer />
     </div>
   );
 }

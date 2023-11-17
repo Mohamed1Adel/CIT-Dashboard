@@ -7,15 +7,7 @@ import UploadMultiImages from "./components/uploadMultiImages";
 function App() {
   return (
     <div className="App">
-      {/* <UploadMultiImages /> */}
-        <Row className="p-0 m-0">
-        <Col lg="2" className="p-0 m-0">
-          <SideMenu />
-        </Col>
-        <Col lg="10" className="p-0 m-0">
           <Home />
-        </Col>
-        </Row>
     </div>
   );
 }
