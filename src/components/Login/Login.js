@@ -21,10 +21,14 @@ function Login({userLogin}) {
                 console.log(res.data);
                if( res.data === "exist"){
                 userLogin(true)
+                localStorage.setItem('userLogin',"true")
                 history("/all",{state:{id:userName}})
                 
                }else if( res.data === "notexist"){
                 userLogin(false)
+                if (localStorage.getItem('userLogin')) {
+                  localStorage.setItem('userLogin',"false")
+                }
                 alert("User have not sign up")
                }
             }).catch(e=>{

@@ -49,7 +49,17 @@ function HistorecalTampUpdate() {
   };
   const updatedDaysF = (id) => {
     let updatedDaysArr = data?.itenary?.map((day) =>
-      day.id === id ? { id: day.id, ...newDay } : day
+    day.id === id
+    ? {
+        id: day.id,
+        dayTitle:
+          newDay.dayTitle === undefined ? day.dayTitle : newDay.dayTitle,
+        dayContent:
+          newDay.dayContent === undefined ? day.dayContent : newDay.dayContent,
+        optTour:
+          newDay.optTour === undefined ? day.optTour : newDay.optTour,
+      }
+    : day
     );
     setData({ ...data, itenary: updatedDaysArr });
     // console.log(updatedDaysArr);
@@ -624,14 +634,12 @@ function HistorecalTampUpdate() {
                     // }
                   }
                 >
-                  Add New Day
+                  Update Day
                 </button>
               </div>
             );
           })}
-          <button className="btn btn-success" onClick={updatedDays}>
-            Save Update Days
-          </button>
+
         </ul>
       </div>
       <ToastContainer />

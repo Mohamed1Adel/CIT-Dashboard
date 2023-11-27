@@ -55,6 +55,7 @@ function Outbound() {
             <li key={day.id}>
               <h3>{day.dayTitle}</h3>
               <p>{day.dayContent}</p>
+              <p>{day.optTour}</p>
             </li>
           );
         })

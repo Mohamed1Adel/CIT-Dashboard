@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import "./Home.scss";
 import { Routes, Route } from "react-router-dom";
 import Domistics from "../Domistics/Domistics";
@@ -24,6 +24,9 @@ function Home() {
   const userLogin = async(log)=>{
     setIsLogged(await log)
   }
+  useEffect(()=>{
+localStorage.getItem('userLogin')
+  },[])
   return (
     <div className="">
       <div className="head-logo">
@@ -33,7 +36,7 @@ function Home() {
         <Routes>
           <Route path="/" element={<Login userLogin={userLogin}/>} />
           <Route
-            path= { isLogged ? "/all": null }
+            path= { localStorage.getItem('userLogin') === "true" ? "/all": null }
             element={
               <Row className="p-0 m-0">
                 <Col lg="2" className="p-0 m-0">
@@ -46,7 +49,7 @@ function Home() {
             }
           />
           <Route
-            path= { isLogged ? "/domestics": null }
+            path= { localStorage.getItem('userLogin') === "true" ? "/domestics": null }
             element={
               <Row className="p-0 m-0">
                 <Col lg="2" className="p-0 m-0">
@@ -59,7 +62,7 @@ function Home() {
             }
           />
           <Route
-            path= { isLogged ? "/updateDomestic/:id": null }
+            path= { localStorage.getItem('userLogin') === "true" ? "/updateDomestic/:id": null }
             element={
               <Row className="p-0 m-0">
                 <Col lg="2" className="p-0 m-0">
@@ -72,7 +75,7 @@ function Home() {
             }
           />
           <Route
-            path= { isLogged ? "/outbound": null }
+            path= { localStorage.getItem('userLogin') === "true" ? "/outbound": null }
             element={
               <Row className="p-0 m-0">
                 <Col lg="2" className="p-0 m-0">
@@ -85,7 +88,7 @@ function Home() {
             }
           />
           <Route
-            path= { isLogged ? "/outboundTempUpdate/:id": null }
+            path= { localStorage.getItem('userLogin') === "true" ? "/outboundTempUpdate/:id": null }
             element={
               <Row className="p-0 m-0">
                 <Col lg="2" className="p-0 m-0">
@@ -98,7 +101,7 @@ function Home() {
             }
           />
           <Route
-            path= { isLogged ? "/historical": null }
+            path= { localStorage.getItem('userLogin') === "true" ? "/historical": null }
             element={
               <Row className="p-0 m-0">
                 <Col lg="2" className="p-0 m-0">
@@ -111,7 +114,7 @@ function Home() {
             }
           />
           <Route
-            path= { isLogged ? "/updateProgram/:id": null }
+            path= { localStorage.getItem('userLogin') === "true" ? "/updateProgram/:id": null }
             element={
               <Row className="p-0 m-0">
                 <Col lg="2" className="p-0 m-0">
@@ -124,7 +127,7 @@ function Home() {
             }
           />
           <Route
-            path= { isLogged ? "/nileCruise": null }
+            path= { localStorage.getItem('userLogin') === "true" ? "/nileCruise": null }
             element={
               <Row className="p-0 m-0">
                 <Col lg="2" className="p-0 m-0">
@@ -137,7 +140,7 @@ function Home() {
             }
           />
           <Route
-            path= { isLogged ? "/nileCruiseTempUpdate/:id": null }
+            path= { localStorage.getItem('userLogin') === "true" ? "/nileCruiseTempUpdate/:id": null }
             element={
               <Row className="p-0 m-0">
                 <Col lg="2" className="p-0 m-0">
@@ -150,7 +153,7 @@ function Home() {
             }
           />
           <Route
-            path= { isLogged ? "/dayTour": null }
+            path= { localStorage.getItem('userLogin') === "true" ? "/dayTour": null }
             element={
               <Row className="p-0 m-0">
                 <Col lg="2" className="p-0 m-0">
@@ -163,7 +166,7 @@ function Home() {
             }
           />
           <Route
-            path= { isLogged ? "/dayTourTempUpdate/:id": null }
+            path= { localStorage.getItem('userLogin') === "true" ? "/dayTourTempUpdate/:id": null }
             element={
               <Row className="p-0 m-0">
                 <Col lg="2" className="p-0 m-0">
@@ -176,7 +179,7 @@ function Home() {
             }
           />
           <Route
-            path= { isLogged ? "/Hajj": null }
+            path= { localStorage.getItem('userLogin') === "true" ? "/Hajj": null }
             element={
               <Row className="p-0 m-0">
                 <Col lg="2" className="p-0 m-0">
@@ -189,7 +192,7 @@ function Home() {
             }
           />
           <Route
-            path= { isLogged ? "/HajjTempUpdate/:id": null }
+            path= { localStorage.getItem('userLogin') === "true" ? "/HajjTempUpdate/:id": null }
             element={
               <Row className="p-0 m-0">
                 <Col lg="2" className="p-0 m-0">
@@ -221,3 +224,199 @@ function Home() {
 }
 
 export default Home;
+
+
+// return (
+//   <div className="">
+//     <div className="head-logo">
+//       <h1>CIT Travel Dashboard</h1>
+//     </div>
+//     <div className="home-section">
+//       <Routes>
+//         <Route path="/" element={<Login userLogin={userLogin}/>} />
+//         <Route
+//           path= { isLogged ? "/all": null }
+//           element={
+//             <Row className="p-0 m-0">
+//               <Col lg="2" className="p-0 m-0">
+//                 <SideMenu />
+//               </Col>
+//               <Col lg="10" className="p-3 m-0">
+//                 <AllCategories />
+//               </Col>
+//             </Row>
+//           }
+//         />
+//         <Route
+//           path= { isLogged ? "/domestics": null }
+//           element={
+//             <Row className="p-0 m-0">
+//               <Col lg="2" className="p-0 m-0">
+//                 <SideMenu />
+//               </Col>
+//               <Col lg="10" className="p-3 m-0">
+//                 <Domistics />
+//               </Col>
+//             </Row>
+//           }
+//         />
+//         <Route
+//           path= { isLogged ? "/updateDomestic/:id": null }
+//           element={
+//             <Row className="p-0 m-0">
+//               <Col lg="2" className="p-0 m-0">
+//                 <SideMenu />
+//               </Col>
+//               <Col lg="10" className="p-3 m-0">
+//                 <UpdateDomestic />
+//               </Col>
+//             </Row>
+//           }
+//         />
+//         <Route
+//           path= { isLogged ? "/outbound": null }
+//           element={
+//             <Row className="p-0 m-0">
+//               <Col lg="2" className="p-0 m-0">
+//                 <SideMenu />
+//               </Col>
+//               <Col lg="10" className="p-3 m-0">
+//                 <Outbound />
+//               </Col>
+//             </Row>
+//           }
+//         />
+//         <Route
+//           path= { isLogged ? "/outboundTempUpdate/:id": null }
+//           element={
+//             <Row className="p-0 m-0">
+//               <Col lg="2" className="p-0 m-0">
+//                 <SideMenu />
+//               </Col>
+//               <Col lg="10" className="p-3 m-0">
+//                 <OutboundTempUpdate />
+//               </Col>
+//             </Row>
+//           }
+//         />
+//         <Route
+//           path= { isLogged ? "/historical": null }
+//           element={
+//             <Row className="p-0 m-0">
+//               <Col lg="2" className="p-0 m-0">
+//                 <SideMenu />
+//               </Col>
+//               <Col lg="10" className="p-3 m-0">
+//                 <Historical />
+//               </Col>
+//             </Row>
+//           }
+//         />
+//         <Route
+//           path= { isLogged ? "/updateProgram/:id": null }
+//           element={
+//             <Row className="p-0 m-0">
+//               <Col lg="2" className="p-0 m-0">
+//                 <SideMenu />
+//               </Col>
+//               <Col lg="10" className="p-3 m-0">
+//                 <HistorecalTampUpdate />
+//               </Col>
+//             </Row>
+//           }
+//         />
+//         <Route
+//           path= { isLogged ? "/nileCruise": null }
+//           element={
+//             <Row className="p-0 m-0">
+//               <Col lg="2" className="p-0 m-0">
+//                 <SideMenu />
+//               </Col>
+//               <Col lg="10" className="p-3 m-0">
+//                 <NileCruise />
+//               </Col>
+//             </Row>
+//           }
+//         />
+//         <Route
+//           path= { isLogged ? "/nileCruiseTempUpdate/:id": null }
+//           element={
+//             <Row className="p-0 m-0">
+//               <Col lg="2" className="p-0 m-0">
+//                 <SideMenu />
+//               </Col>
+//               <Col lg="10" className="p-3 m-0">
+//                 <NileCruiseTempUpdate />
+//               </Col>
+//             </Row>
+//           }
+//         />
+//         <Route
+//           path= { isLogged ? "/dayTour": null }
+//           element={
+//             <Row className="p-0 m-0">
+//               <Col lg="2" className="p-0 m-0">
+//                 <SideMenu />
+//               </Col>
+//               <Col lg="10" className="p-3 m-0">
+//                 <DayTours />
+//               </Col>
+//             </Row>
+//           }
+//         />
+//         <Route
+//           path= { isLogged ? "/dayTourTempUpdate/:id": null }
+//           element={
+//             <Row className="p-0 m-0">
+//               <Col lg="2" className="p-0 m-0">
+//                 <SideMenu />
+//               </Col>
+//               <Col lg="10" className="p-3 m-0">
+//                 <DayTourTampUpdate />
+//               </Col>
+//             </Row>
+//           }
+//         />
+//         <Route
+//           path= { isLogged ? "/Hajj": null }
+//           element={
+//             <Row className="p-0 m-0">
+//               <Col lg="2" className="p-0 m-0">
+//                 <SideMenu />
+//               </Col>
+//               <Col lg="10" className="p-3 m-0">
+//                 <HajjAndOmrah />
+//               </Col>
+//             </Row>
+//           }
+//         />
+//         <Route
+//           path= { isLogged ? "/HajjTempUpdate/:id": null }
+//           element={
+//             <Row className="p-0 m-0">
+//               <Col lg="2" className="p-0 m-0">
+//                 <SideMenu />
+//               </Col>
+//               <Col lg="10" className="p-3 m-0">
+//                 <HajjOmrahTampUpdate />
+//               </Col>
+//             </Row>
+//           }
+//         />
+//         {/* <Route
+//           path= { isLogged ? "/UpdateSliderImages": null }
+//           element={
+//             <Row className="p-0 m-0">
+//               <Col lg="2" className="p-0 m-0">
+//                 <SideMenu />
+//               </Col>
+//               <Col lg="10" className="p-3 m-0">
+//                 <UpdateSliderImages />
+//               </Col>
+//             </Row>
+//           }
+//         /> */}
+//       </Routes>
+//     </div>
+//   </div>
+// );

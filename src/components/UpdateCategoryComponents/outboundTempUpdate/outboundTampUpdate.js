@@ -84,11 +84,22 @@ function OutboundTampUpdate() {
     });
     console.log(newHotels);
     setData({ ...data, PackhotelsAndPrices: newHotels });
-    packUpdatedNotify()
+    packUpdatedNotify();
   };
   const updatedDaysF = (id) => {
     let updatedDaysArr = data?.itenary?.map((day) =>
-      day.id === id ? { id: day.id, ...newDay } : day
+      // day.id === id ? { id: day.id, ...newDay } : day
+      day.id === id
+        ? {
+            id: day.id,
+            dayTitle:
+              newDay.dayTitle === undefined ? day.dayTitle : newDay.dayTitle,
+            dayContent:
+              newDay.dayContent === undefined ? day.dayContent : newDay.dayContent,
+            optTour:
+              newDay.optTour === undefined ? day.optTour : newDay.optTour,
+          }
+        : day
     );
     setData({ ...data, itenary: updatedDaysArr });
     // console.log(updatedDaysArr);
@@ -104,19 +115,19 @@ function OutboundTampUpdate() {
     console.log(filterHotels);
     setData({ ...data, PackhotelsAndPrices: filterHotels });
   };
-    const addNewPack = (e) => {
-      e.preventDefault();
-      // console.log({ ...data, packages: packs });
-      let rand = Math.floor(Math.random() * 1000000000000000);
-      console.log(rand);
-      hotels.push({ id: rand, ...newHotel });
-      console.log({ id: rand, ...newHotel });
-      // console.log(packs);
-      setData({ ...data, packages: hotels });
-      // sendForm.current.value = "";
-      // packageNotify();
-      handleSubmit();
-    };
+  const addNewPack = (e) => {
+    e.preventDefault();
+    // console.log({ ...data, packages: packs });
+    let rand = Math.floor(Math.random() * 1000000000000000);
+    console.log(rand);
+    hotels.push({ id: rand, ...newHotel });
+    console.log({ id: rand, ...newHotel });
+    // console.log(packs);
+    setData({ ...data, packages: hotels });
+    // sendForm.current.value = "";
+    // packageNotify();
+    handleSubmit();
+  };
   const getItemById = async () => {
     try {
       // const response = await axios.get(`${API_URL}/outbound/${id}`);
@@ -806,14 +817,12 @@ function OutboundTampUpdate() {
                     // }
                   }
                 >
-                  Add New Day
+                  Update Day
                 </button>
               </div>
             );
           })}
-          <button className="btn btn-success" onClick={updatedDays}>
-            Save Update Days
-          </button>
+
         </ul>
       </div>
       <ToastContainer />
