@@ -1,8 +1,15 @@
 import React from "react";
 import "./sideMenu.scss";
 import logo from "../../logo/main-logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from 'react-bootstrap';
 function SideMenu() {
+  const navigate = useNavigate();
+  const logOut = ()=>{
+    
+    localStorage.removeItem('userLogin')
+    navigate("/")
+  }
   return (
     <div className="side-menu">
       <div className="logo">
@@ -32,10 +39,13 @@ function SideMenu() {
           <li className="item">
             <Link to="/Hajj">Hajj & Omrah</Link>
           </li>
+          <li className="item">
+          </li>
           {/* <li className="item">
             <Link to="/UpdateSliderImages">Update Slider Images</Link>
           </li> */}
         </ul>
+           <Button variant="danger" onClick={()=>logOut()}>Log Out</Button>
       </div>
     </div>
   );
