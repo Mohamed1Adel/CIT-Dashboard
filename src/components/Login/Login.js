@@ -4,7 +4,7 @@ import axios from 'axios'
 import { Button, Form } from 'react-bootstrap'
 import { MONGODB_URL } from '../../envData'
 import { useNavigate } from 'react-router-dom'
-
+import { sha1 } from 'js-sha1';
 function Login({userLogin}) {
     const history = useNavigate()
 
@@ -13,7 +13,7 @@ function Login({userLogin}) {
 
     async function submit(e){
         e.preventDefault()
-
+        console.log(password);
         try{
             await axios.post(`${MONGODB_URL}/login`,{
                 userName,password
@@ -70,12 +70,12 @@ function Login({userLogin}) {
 <Form style={{width:"500px",padding:"40px",border:"1px solid #000",borderRadius:"5px",backgroundColor:"#c1c1c1"}}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Username</Form.Label>
-        <Form.Control type="text" onChange={(e)=>{setUserName(e.target.value)}} placeholder="Enter USername" />
+        <Form.Control type="text" onChange={(e)=>{setUserName(e.target.value)}} placeholder="Enter Username" />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" onChange={(e)=>{setPassword(e.target.value)}} placeholder="Password" />
+        <Form.Control type="password" onChange={(e)=>{setPassword(sha1(e.target.value))}} placeholder="Password" />
       </Form.Group>
       <Button variant="primary" onClick={submit} type="submit">
         Submit

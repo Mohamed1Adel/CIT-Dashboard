@@ -45,7 +45,10 @@ function SideMenu() {
             <Link to="/UpdateSliderImages">Update Slider Images</Link>
           </li> */}
         </ul>
-           <Button variant="danger" onClick={()=>logOut()}>Log Out</Button>
+        <div style={{width:"100%",display:"flex",alignItems:"center",justifyContent:"center"}}>
+
+           <Button style={{margin:"0 auto"}} variant="danger" onClick={()=>logOut()}>Log Out</Button>
+        </div>
       </div>
     </div>
   );

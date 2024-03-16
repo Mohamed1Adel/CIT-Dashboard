@@ -49,7 +49,7 @@ function HajjOmrah() {
 
     console.log(days);
     setHajjOmrah({ ...hajjOmrah, itenary: days });
-    dayAddedNotify()
+    dayAddedNotify();
   };
   const showDays =
     days?.length >= 1
@@ -189,7 +189,6 @@ function HajjOmrah() {
 
   return (
     <div dir="rtl">
-
       <h1 className="main-heading">الحج والعمرة</h1>
       <div className="form-section main-domestic">
         <Form className="main-form" onSubmit={(e) => handleSubmit(e)}>
@@ -229,10 +228,21 @@ function HajjOmrah() {
                   class="form-select"
                   aria-label="Select Package"
                 >
-                  <option selected value="10 ليالي">
-                    10 ليالي
+                  <option selected value="4 ليالي / 5 ايام">
+                    4 ليالي / 5 ايام
                   </option>
-                  <option value="15 ليلة">15 ليلة</option>
+                  <option selected value="7 ليالي / 8 ايام">
+                    7 ليالي / 8 ايام
+                  </option>
+                  <option selected value="9 ليالي / 10 ايام">
+                    9 ليالي / 10 ايام
+                  </option>
+                  <option selected value="13 ليالي / 14 ايام">
+                    13 ليالي / 14 ايام
+                  </option>
+                  <option selected value="30 ليالي / 31 ايام">
+                    30 ليالي / 31 ايام
+                  </option>
                 </select>
               </Form.Group>
 

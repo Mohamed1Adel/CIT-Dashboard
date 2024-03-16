@@ -115,7 +115,7 @@ function UpdateDomestic() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
+    try {     
       await axios
         .patch(`${MONGODB_URL}/updateDomesticDetails/${id}`, data)
         // .patch(`${API_URL}/domestics/${id}`, data)
