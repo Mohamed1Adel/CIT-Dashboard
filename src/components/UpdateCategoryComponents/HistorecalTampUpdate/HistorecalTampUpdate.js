@@ -21,6 +21,24 @@ function HistorecalTampUpdate() {
   const dayUpdatedNotify = () => toast("Day Updated Successfully");
   const programUpdatedNotify = () => toast("Program Added Successfully");
   const packUpdatedNotify = () => toast("Pack Updated Successfully");
+
+  const getItemById = async () => {
+    try {
+      // const response = await axios.get(`${API_URL}/programs/${id}`);
+      const response = await axios.get(
+        `${MONGODB_URL}/getProgramDetails/${id}`
+      );
+      const domData = response.data;
+      // console.log(domData);
+      setData(domData);
+      setHotels(domData?.hotels);
+    } catch (e) {
+      console.log("====================================");
+      console.log(e);
+      console.log("====================================");
+    }
+    console.log(data);
+  };
   const updateHotel = async (e, HotelItem) => {
     e.preventDefault();
     const newHotels = hotels.map((hotel) => {
@@ -47,48 +65,13 @@ function HistorecalTampUpdate() {
     setData({ ...data, hotels: newHotels });
     packUpdatedNotify()
   };
-  const updatedDaysF = (id) => {
-    let updatedDaysArr = data?.itenary?.map((day) =>
-    day.id === id
-    ? {
-        id: day.id,
-        dayTitle:
-          newDay.dayTitle === undefined ? day.dayTitle : newDay.dayTitle,
-        dayContent:
-          newDay.dayContent === undefined ? day.dayContent : newDay.dayContent,
-        optTour:
-          newDay.optTour === undefined ? day.optTour : newDay.optTour,
-      }
-    : day
-    );
-    setData({ ...data, itenary: updatedDaysArr });
-    // console.log(updatedDaysArr);
-    console.log(data);
-    dayUpdatedNotify();
-  };
+
   // console.log(data);
   const deleteHotel = (e, hotelId) => {
     e.preventDefault();
     const filterHotels = data?.hotels?.filter((hotel) => hotel.id !== hotelId);
     console.log(filterHotels);
     setData({ ...data, hotels: filterHotels });
-  };
-  const getItemById = async () => {
-    try {
-      // const response = await axios.get(`${API_URL}/programs/${id}`);
-      const response = await axios.get(
-        `${MONGODB_URL}/getProgramDetails/${id}`
-      );
-      const domData = response.data;
-      // console.log(domData);
-      setData(domData);
-      setHotels(domData?.hotels);
-    } catch (e) {
-      console.log("====================================");
-      console.log(e);
-      console.log("====================================");
-    }
-    console.log(data);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -145,6 +128,25 @@ function HistorecalTampUpdate() {
     }
   };
 
+  const updatedDaysF = (id) => {
+    let updatedDaysArr = data?.itenary?.map((day) =>
+    day.id === id
+    ? {
+        id: day.id,
+        dayTitle:
+          newDay.dayTitle === undefined ? day.dayTitle : newDay.dayTitle,
+        dayContent:
+          newDay.dayContent === undefined ? day.dayContent : newDay.dayContent,
+        optTour:
+          newDay.optTour === undefined ? day.optTour : newDay.optTour,
+      }
+    : day
+    );
+    setData({ ...data, itenary: updatedDaysArr });
+    // console.log(updatedDaysArr);
+    console.log(data);
+    dayUpdatedNotify();
+  };
   const handleTermsChange = (value) => {
     setData({ ...data, termsAndConditions: value });
   };
@@ -296,7 +298,7 @@ function HistorecalTampUpdate() {
               </div>
               <br />
               <div>
-                <h4>Terms And Conditions</h4>
+                <h4>Package Excludes</h4>
                 <QuillToolbar />
                 <ReactQuill
                   // value={program.termsAndConditions}

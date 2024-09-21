@@ -280,7 +280,7 @@ function Historical() {
               </div>
               <br />
               <div>
-                <h4>Terms And Conditions</h4>
+                <h4>Package Excludes</h4>
                 <QuillToolbar />
                 <ReactQuill
                   // value={program.termsAndConditions}

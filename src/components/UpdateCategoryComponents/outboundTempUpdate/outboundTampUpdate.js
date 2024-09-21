@@ -219,13 +219,19 @@ function OutboundTampUpdate() {
     setData({ ...data, termsAndConditions: value });
   };
   const handleCancelationChange = (value) => {
-    setData({ ...data, cancelationPolices: value });
+    setData({ ...data, canceltion: value });
   };
   const handleVisaChange = (value) => {
     setData({ ...data, visa: value });
   };
+  const handleNotesChange = (value) => {
+    setData({ ...data, notes: value });
+  };
   const handlePackIncludeChange = (value) => {
     setData({ ...data, packInclude: value });
+  };
+  const handlePackExcludeChange = (value) => {
+    setData({ ...data, packExclude: value });
   };
   // const handleItenaryContentChange = (value) => {
   //   setNewDay({ ...day, dayContent: value });
@@ -349,6 +355,27 @@ function OutboundTampUpdate() {
                   onChange={(e) => handleFlyFileUpload(e)}
                 />
               </Form.Group>
+
+            </div>
+            <div className="right-form">
+              <div>
+                <h4>Package Include</h4>
+                {/* <QuillToolbar /> */}
+                <ReactQuill
+                  // value={program.packInclude}
+                  onChange={handlePackIncludeChange}
+                />
+              </div>
+              <br />
+              <div>
+                <h4>Package Exclude</h4>
+                {/* <QuillToolbar /> */}
+                <ReactQuill
+                  // value={program.packInclude}
+                  onChange={handlePackExcludeChange}
+                />
+              </div>
+              <br />
               <div>
                 <h4>Visa</h4>
                 {/* <EditorToolbar /> */}
@@ -358,14 +385,12 @@ function OutboundTampUpdate() {
                 />
               </div>
               <br />
-            </div>
-            <div className="right-form">
               <div>
-                <h4>Package Include</h4>
-                {/* <QuillToolbar /> */}
+                <h4>Notes</h4>
+                {/* <EditorToolbar /> */}
                 <ReactQuill
-                  // value={program.packInclude}
-                  onChange={handlePackIncludeChange}
+                  // value={program.highilghts}
+                  onChange={handleNotesChange}
                 />
               </div>
               <br />
@@ -382,9 +407,7 @@ function OutboundTampUpdate() {
               <br />
               <div>
                 <h4>Cancelation Polices</h4>
-                {/* <QuillToolbar /> */}
                 <ReactQuill
-                  // value={program.cancelationPolices}
                   onChange={handleCancelationChange}
                 />
               </div>

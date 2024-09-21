@@ -38,7 +38,11 @@ function NileCruise() {
     itenary: [],
     termsAndConditions: "",
     cancellation: "",
+    include: "",
+    exclude: "",
+    children: "",
     hotOffer: false,
+    egypt_cruise: false,
     nileCruise: false,
   });
   const addNewDay = (e) => {
@@ -99,6 +103,15 @@ function NileCruise() {
   };
   const handlecancellationChange = (value) => {
     setNileCruise({ ...nileCruise, cancellation: value });
+  };
+  const handleIncludeChange = (value) => {
+    setNileCruise({ ...nileCruise, include: value });
+  };
+  const handleExcludeChange = (value) => {
+    setNileCruise({ ...nileCruise, exclude: value });
+  };
+  const handleChildrenChange = (value) => {
+    setNileCruise({ ...nileCruise, children: value });
   };
   // const handleChildrenChange = (value) => {
   //   setNileCruise({ ...nileCruise, childrenPolices: value });
@@ -265,19 +278,7 @@ function NileCruise() {
                   placeholder="Box 10"
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check
-                  value={nileCruise?.hotOffer}
-                  onChange={(e) => {
-                    setNileCruise({
-                      ...nileCruise,
-                      hotOffer: e.currentTarget.checked,
-                    });
-                  }}
-                  type="checkbox"
-                  label="Hot Deal"
-                />
-              </Form.Group>
+
               <Form.Group controlId="formFileMultiple" className="mb-3">
                 <Form.Label>Upload Images</Form.Label>
                 <input
@@ -290,6 +291,19 @@ function NileCruise() {
                 />
               </Form.Group>
               <div className="checks">
+              <Form.Group className="mb-3" controlId="egypt_cruise">
+                <Form.Check
+                  value={nileCruise?.egypt_cruise}
+                  onChange={(e) => {
+                    setNileCruise({
+                      ...nileCruise,
+                      egypt_cruise: e.currentTarget.checked,
+                    });
+                  }}
+                  type="checkbox"
+                  label="Egypt Cruise"
+                />
+              </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                   <Form.Check
                     value={nileCruise.hotOffer}
@@ -376,6 +390,33 @@ function NileCruise() {
                 />
               </div>
               <br />
+              <div>
+                <h4>Include</h4>
+                {/* <EditorToolbar /> */}
+                <ReactQuill
+                  value={nileCruise.include}
+                  onChange={handleIncludeChange}
+                />
+              </div>
+              <br />
+              <div>
+                <h4>Exclude</h4>
+                {/* <EditorToolbar /> */}
+                <ReactQuill
+                  value={nileCruise.exclude}
+                  onChange={handleExcludeChange}
+                />
+              </div>
+              <br />
+              <div>
+                <h4>Children</h4>
+                {/* <EditorToolbar /> */}
+                <ReactQuill
+                  value={nileCruise.children}
+                  onChange={handleChildrenChange}
+                />
+              </div>
+              <br />
             </div>
           </div>
 
@@ -402,7 +443,21 @@ function NileCruise() {
                 <option value="6 Days / 5 Nights">6 Days / 5 Nights</option>
                 <option value="7 Days / 6 Nights">7 Days / 6 Nights</option>
                 <option value="8 Days / 7 Nights">8 Days / 7 Nights</option>
-                <option value="9 Days / 8 Nights">9 Days / 8 Nights</option>
+                <option value="9 Days / 8 Nights">
+                        9 Days / 8 Nights
+                      </option>
+                      <option value="10 Days / 9 Nights">
+                        10 Days / 9 Nights
+                      </option>
+                      <option value="11 Days / 10 Nights">
+                        11 Days / 10 Nights
+                      </option>
+                      <option value="12 Days / 11 Nights">
+                        12 Days / 11 Nights
+                      </option>
+                      <option value="13 Days / 12 Nights">
+                        13 Days / 12 Nights
+                      </option>
               </select>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasic">

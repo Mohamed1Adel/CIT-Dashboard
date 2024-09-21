@@ -34,10 +34,14 @@ function Outbound() {
     box10: "",
     termsAndConditions: "",
     packInclude: "",
+    packExclude: "",
     visa: "",
-    flyDetails: "",
-    itenary: [],
+    canceltion: "",
+    notes: "",
+    flyDetails: {},
+    itenary: {},
     PackhotelsAndPrices: [],
+    images:{},
     hotOffer: false,
   });
   const addNewDay = (e) => {
@@ -118,12 +122,22 @@ function Outbound() {
   const handleVisaChange = (value) => {
     setOutbound({ ...outbound, visa: value });
   };
+  const handleCanceltionChange = (value) => {
+    setOutbound({ ...outbound, canceltion: value });
+  };
+  const handleNotesChange = (value) => {
+    setOutbound({ ...outbound, notes: value });
+  };
   // const handleHighlightsChange = (value) => {
   //   setProgram({ ...program, highilghts: value });
   // };
   const handlePackIncludeChange = (value) => {
     setOutbound({ ...outbound, packInclude: value });
   };
+  const handlePackExcludeChange = (value) => {
+    setOutbound({ ...outbound, packExclude: value });
+  };
+  
   const handleItenaryContentChange = (value) => {
     setDay({ ...day, dayContent: value });
   };
@@ -230,7 +244,7 @@ function Outbound() {
                     setOutbound({ ...outbound, box6: e.target.value });
                   }}
                   type="text"
-                  placeholder="Box 6"
+                  placeholder="Category"
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasic">
@@ -327,11 +341,29 @@ function Outbound() {
               </div>
               <br />
               <div>
+                <h4>Package Exclude</h4>
+                {/* <QuillToolbar /> */}
+                <ReactQuill
+                  // value={program.packInclude}
+                  onChange={handlePackExcludeChange}
+                />
+              </div>
+              <br />
+              <div>
                 <h4>Visa</h4>
                 {/* <QuillToolbar /> */}
                 <ReactQuill
                   // value={program.packInclude}
                   onChange={handleVisaChange}
+                />
+              </div>
+              <br />
+              <div>
+                <h4>Notes</h4>
+                {/* <QuillToolbar /> */}
+                <ReactQuill
+                  // value={program.packInclude}
+                  onChange={handleNotesChange}
                 />
               </div>
               <br />
@@ -349,7 +381,7 @@ function Outbound() {
               <div>
                 <h4>Cancelation Polices</h4>
 
-                <ReactQuill onChange={handleVisaChange} />
+                <ReactQuill onChange={handleCanceltionChange} />
               </div>
               <br />
             </div>

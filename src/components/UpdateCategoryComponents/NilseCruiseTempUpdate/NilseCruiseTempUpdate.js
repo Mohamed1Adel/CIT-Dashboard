@@ -25,7 +25,7 @@ function NileCruiseTempUpdate() {
       const domData = response.data;
       // console.log(domData);
       setData(domData);
-      setPacks(domData.packages);
+      setPacks(domData?.packages);
     } catch (e) {
       console.log("====================================");
       console.log(e);
@@ -180,6 +180,15 @@ function NileCruiseTempUpdate() {
   const handlecancellationChange = (value) => {
     setData({ ...data, cancellation: value });
   };
+  const handleincludeChange = (value) => {
+    setData({ ...data, include: value });
+  };
+  const handleExcludeChange = (value) => {
+    setData({ ...data, exclude: value });
+  };
+  const handleChildrenChange = (value) => {
+    setData({ ...data, children: value });
+  };
   //   const handleChildrenChange = (value) => {
   //     setData({ ...data, childrenPolices: value });
   //   };
@@ -291,19 +300,8 @@ function NileCruiseTempUpdate() {
                   placeholder="Box 10"
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check
-                  value={data?.hotOffer}
-                  onChange={(e) => {
-                    setData({
-                      ...data,
-                      hotOffer: e.currentTarget.checked,
-                    });
-                  }}
-                  type="checkbox"
-                  label="Hot Deal"
-                />
-              </Form.Group>
+
+
               <Form.Group controlId="formFileMultiple" className="mb-3">
                 <Form.Label>Upload Images</Form.Label>
                 <input
@@ -316,6 +314,21 @@ function NileCruiseTempUpdate() {
                 />
               </Form.Group>
               <div className="checks">
+                
+              <Form.Group className="mb-3" controlId="egypt_cruise">
+                <Form.Check
+                  value={data?.egypt_cruise}
+                  checked={data?.egypt_cruise}
+                  onChange={(e) => {
+                    setData({
+                      ...data,
+                      egypt_cruise: e.currentTarget.checked,
+                    });
+                  }}
+                  type="checkbox"
+                  label="Egypt Cruise"
+                />
+              </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                   <Form.Check
                     checked={data?.hotOffer}
@@ -396,7 +409,7 @@ function NileCruiseTempUpdate() {
                 <h4>Terms And Conditions</h4>
                 <QuillToolbar />
                 <ReactQuill
-                  value={data?.termsAndConditions}
+                  // value={data?.termsAndConditions}
                   onChange={handleTermsChange}
                   modules={modules}
                   formats={formats}
@@ -407,8 +420,35 @@ function NileCruiseTempUpdate() {
                 <h4>Cancellation Polices</h4>
                 {/* <EditorToolbar /> */}
                 <ReactQuill
-                  value={data?.cancellation}
+                  // value={data?.cancellation}
                   onChange={handlecancellationChange}
+                />
+              </div>
+              <br />
+              <div>
+                <h4>Include</h4>
+                {/* <EditorToolbar /> */}
+                <ReactQuill
+                  // value={data?.cancellation}
+                  onChange={handleincludeChange}
+                />
+              </div>
+              <br />
+              <div>
+                <h4>Exclude</h4>
+                {/* <EditorToolbar /> */}
+                <ReactQuill
+                  // value={data?.cancellation}
+                  onChange={handleExcludeChange}
+                />
+              </div>
+              <br />
+              <div>
+                <h4>Children</h4>
+                {/* <EditorToolbar /> */}
+                <ReactQuill
+                  // value={data?.cancellation}
+                  onChange={handleChildrenChange}
                 />
               </div>
               <br />
@@ -710,6 +750,18 @@ function NileCruiseTempUpdate() {
                       </option>
                       <option value="9 Days / 8 Nights">
                         9 Days / 8 Nights
+                      </option>
+                      <option value="10 Days / 9 Nights">
+                        10 Days / 9 Nights
+                      </option>
+                      <option value="11 Days / 10 Nights">
+                        11 Days / 10 Nights
+                      </option>
+                      <option value="12 Days / 11 Nights">
+                        12 Days / 11 Nights
+                      </option>
+                      <option value="13 Days / 12 Nights">
+                        13 Days / 12 Nights
                       </option>
                     </select>
                   </Form.Group>

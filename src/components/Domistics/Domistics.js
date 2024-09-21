@@ -1,3 +1,49 @@
+// import React, { useState } from 'react';
+// import axios from 'axios';
+
+// const Domistics = () => {
+//   const [selectedImages, setSelectedImages] = useState([]);
+//   const [uploadedImageNames, setUploadedImageNames] = useState([]);
+
+//   const handleImageChange = (e) => {
+//     setSelectedImages([...selectedImages, ...e.target.files]);
+//   };
+
+//   const handleUpload = async () => {
+//     const formData = new FormData();
+//     selectedImages.forEach((image) => {
+//       formData.append('images', image);
+//     });
+
+//     try {
+//       const response = await axios.post('http://localhost:3001/api/upload', formData, {
+//         headers: {
+//           'Content-Type': 'multipart/form-data',
+//         },
+//       });
+
+//       setUploadedImageNames(response.data.uploadedFiles);
+//     } catch (error) {
+//       console.error('Error uploading images:', error);
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <input type="file" multiple onChange={handleImageChange} />
+//       <button onClick={handleUpload}>Upload</button>
+//       <div>
+//         <h2>Uploaded Images:</h2>
+//         {uploadedImageNames.map((name, index) => (
+//           <div key={index}>{name}</div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Domistics;
+
 import React, { useState, useRef, useEffect } from "react";
 import "./Domistics.scss";
 import ReactQuill from "react-quill";
@@ -44,6 +90,7 @@ function Domistics() {
     winter: false,
     honeyMoon: false,
     nileCruise: false,
+    home:false
   });
   const handleSubmit = async (e) => {
     try {
@@ -256,6 +303,19 @@ function Domistics() {
                     }}
                     type="checkbox"
                     label="Hot Deal"
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  <Form.Check
+                    value={domestic?.home}
+                    onChange={(e) => {
+                      setDomestic({
+                        ...domestic,
+                        home: e.currentTarget.checked,
+                      });
+                    }}
+                    type="checkbox"
+                    label="home"
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">

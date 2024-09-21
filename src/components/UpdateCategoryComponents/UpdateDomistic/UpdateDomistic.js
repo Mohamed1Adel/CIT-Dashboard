@@ -315,6 +315,20 @@ function UpdateDomestic() {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                   <Form.Check
+                    checked={data?.home}
+                    value={data?.home}
+                    onChange={(e) => {
+                      setData({
+                        ...data,
+                        HTMLModElement: e.currentTarget.checked,
+                      });
+                    }}
+                    type="checkbox"
+                    label="home"
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  <Form.Check
                     checked={data?.honeyMoon}
                     value={data?.honeyMoon}
                     onChange={(e) => {
