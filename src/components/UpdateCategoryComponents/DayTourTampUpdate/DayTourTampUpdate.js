@@ -133,7 +133,10 @@ function DayTourTempUpdate() {
     setData({ ...data, termsAndConditions: value });
   };
   const handlecancellationChange = (value) => {
-    setData({ ...data, cancellation: value });
+    setData({ ...data, cancelationPolices: value });
+  };
+  const handlePackInclude = (value) => {
+    setData({ ...data, packInclude: value });
   };
   const handleChildrenChange = (value) => {
     setData({ ...data, childrenPolices: value });
@@ -303,8 +306,16 @@ function DayTourTempUpdate() {
               </Button>
             </div>
             <div className="right-form">
+            <div>
+                <h4>Day Details</h4>
+                <ReactQuill
+                  value={data?.packInclude}
+                  onChange={handlePackInclude}
+                />
+              </div>
+              <br />
               <div>
-                <h4>Terms And Conditions</h4>
+                <h4>Package Include</h4>
                 <QuillToolbar />
                 <ReactQuill
                   value={data?.termsAndConditions}
@@ -315,31 +326,22 @@ function DayTourTempUpdate() {
               </div>
               <br />
               <div>
-                <h4>Cancellation Polices</h4>
+                <h4>Package Excluede</h4>
                 {/* <EditorToolbar /> */}
                 <ReactQuill
-                  value={data?.cancellation}
+                  value={data?.cancelationPolices}
                   onChange={handlecancellationChange}
                 />
               </div>
               <br />
-              <div>
-                <h4>Children Polices</h4>
-                {/* <QuillToolbar /> */}
-                <ReactQuill
-                  value={data?.childrenPolices}
-                  onChange={handleChildrenChange}
-                />
-              </div>
-              <br />
-              <div>
+              
+              {/* <div>
                 <h4>Required Documents</h4>
-                {/* <QuillToolbar /> */}
                 <ReactQuill
                   value={data?.requiredDocs}
                   onChange={handleRequiredDocsChange}
                 />
-              </div>
+              </div> */}
               <br />
             </div>
           </div>
@@ -515,6 +517,7 @@ function DayTourTempUpdate() {
           </table>
         </Form>
       </div>
+      
       <ToastContainer />
     </div>
   );

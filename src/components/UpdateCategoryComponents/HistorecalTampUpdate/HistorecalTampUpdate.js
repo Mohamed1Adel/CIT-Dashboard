@@ -613,27 +613,7 @@ function HistorecalTampUpdate() {
                   className="btn btn-primary m-5"
                   onClick={
                     () => updatedDaysF(day.id)
-                    //   let oldDayId = day.id;
-                    //   // newDays.push({
-                    //   //   id: day.id,
-                    //   //   ...newDay,
-                    //   // });
-                    //   // console.log(newDays);
-
-                    //   let UpdatesDays = data?.itenary?.map((day) => {
-                    //     console.log(day.id , oldDayId);
-                    //     console.log({
-                    //     id: day.id,
-                    //     ...newDay,
-                    //   });
-                    //     if (day.id === oldDayId.id) {
-                    //       return "hello";
-                    //     } else {
-                    //       return day;
-                    //     }
-                    //   });
-                    //   console.log(UpdatesDays);
-                    // }
+                    
                   }
                 >
                   Update Day
