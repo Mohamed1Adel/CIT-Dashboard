@@ -320,6 +320,7 @@ function OutboundTampUpdate() {
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicCheckbox">
                 <Form.Check
+                checked={data?.hotOffer}
                   value={data?.hotOffer}
                   onChange={(e) => {
                     setData({
